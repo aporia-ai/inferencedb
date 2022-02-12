@@ -168,3 +168,4 @@ Do this multiple times and you should see it in the S3 bucket.
  * Consider adding support for an endpoint to publish messages to the topic instead KNative Eventing, brokers, etc?
  * Performance test (see KServe quickstart, they have automatic stress test)
  * For OSS: Seldon Core, FastAPI support
+ * Remove "core" package"
