@@ -34,12 +34,12 @@ class InferenceLogger:
         })
         
 
-        # TODO: Delete this when the CRD is deleted somehow!
+        # TODO: Delete this when the CRD is deleted - can prefix with "__inferencedb" and list all topics!
         self._target_topic = app.topic("my_avro_topic")
 
 
         # TODO: Destination
-        # TODO: Delete this when the CRD is deleted somehow!
+        # TODO: Delete this when the CRD is deleted - can prefix with "__inferencedb" and GET /connectors to see all existing
         # TODO: Add timestamp field
         # POST http://localhost:8083/connectors
         # {
