@@ -160,3 +160,11 @@ Do this multiple times and you should see it in the S3 bucket.
    If not - this is a problem with InferenceDB, check for errors in our pod.
 
  * Logs on Kafka Connect - there might be an issue with the S3 sink.
+
+
+**TODO:**
+ * Fix all the TODOs in the code.
+ * Add support for Kubernetes CRDs
+ * Consider adding support for an endpoint to publish messages to the topic instead KNative Eventing, brokers, etc?
+ * Performance test (see KServe quickstart, they have automatic stress test)
+ * For OSS: Seldon Core, FastAPI support
