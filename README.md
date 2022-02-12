@@ -169,4 +169,4 @@ Do this multiple times and you should see it in the S3 bucket.
  * Performance test (see KServe quickstart, they have automatic stress test)
  * For OSS: Seldon Core, FastAPI support
  * Remove "core" package"
- * Docs
+ * Docs, CI/CD, GitHub container registry (for my-model and kafka s3 connector as well!), etc.
