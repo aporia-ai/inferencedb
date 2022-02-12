@@ -121,32 +121,32 @@ And send a prediction request:
 ```
 http://localhost:8080/v2/models/my-model/infer
 {
-	"inputs": [
-		{
+  "inputs": [
+    {
       "name": "sepal.length",
       "shape": [],
       "datatype": "FP32",
       "data":  [0.2, 1, 0.2]
-		},
-		{
+    },
+    {
       "name": "sepal.width",
       "shape": [],
       "datatype": "FP32",
       "data":  [0.3, 2, 0.3]
-		},
-		{
+    },
+    {
       "name": "petal.length",
       "shape": [],
       "datatype": "FP32",
       "data":  [0.25, 3, 0.25]
-		},
-		{
+    },
+    {
       "name": "petal.width",
       "shape": [],
       "datatype": "FP32",
       "data":  [0.26, 4, 0.26]
-		}
-	]
+    }
+  ]
 }
 ```
 
