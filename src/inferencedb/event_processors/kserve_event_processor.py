@@ -16,12 +16,11 @@ INFERENCE_RESPONSE_TYPE = "org.kubeflow.serving.inference.response"
 class KServeEventProcessor(EventProcessor):
     def __init__(self,
                  app: faust.App, 
-                 source_topic: faust.TopicT,
                  config: Dict[str, Any]):
         # TODO: Validate config
         self._table = app.Table(
             # TODO: Need different name
-            name='kserve-event-processor-state4', 
+            name="kserve-event-processor-state-4", 
             partitions=config["partitions"])
 
     async def process_event(self, event) -> Inference:

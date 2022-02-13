@@ -2,7 +2,7 @@
 
 replicaCount: 1
 image:
-  repository: account-id.dkr.ecr.us-east-2.amazonaws.com/inferencedb
+  repository: ghcr.io/aporia-ai/inferencedb
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -10,6 +10,10 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+rbac:
+  # Specifies whether RBAC resources should be created
+  create: true
 
 serviceAccount:
   # Specifies whether a service account should be created

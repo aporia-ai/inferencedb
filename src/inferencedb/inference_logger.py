@@ -29,13 +29,11 @@ class InferenceLogger:
         self._source_topic = app.topic(self._config.topic)
         self._event_processor = create_event_processor(config.event_processor.type, {
             "app": app, 
-            "source_topic": self._source_topic,
-            "config": config.event_processor.config
+            "config": config.event_processor.config,
         })
         
-
-        # TODO: Delete this when the CRD is deleted - can prefix with "__inferencedb" and list all topics!
-        self._target_topic = app.topic("my_avro_topic")
+        # TODO: Comment
+        self._target_topic = app.topic(f"inferencedb-{config.name}-avro")
 
 
         # TODO: Destination
@@ -67,12 +65,12 @@ class InferenceLogger:
         # 	}
         # }
 
-    def start(self):
+    def register(self):
         async def agent(stream):
             # Register schema
-            # TODO: Subject name
             schema = await self._schema_provider.get_schema()
-            await self._schema_registry.register("my_avro_topic-value", schema)
+            await self._schema_registry.register(
+                f"{self._target_topic.get_topic_name()}-value", schema)
 
             # Process every inference event
             async for event in stream.events():

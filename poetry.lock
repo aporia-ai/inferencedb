@@ -165,7 +165,7 @@ python-versions = "*"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.0.11"
+version = "2.0.12"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
 optional = false
@@ -733,6 +733,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
+name = "pyhumps"
+version = "3.5.3"
+description = "🐫  Convert strings (and dictionary keys) between snake case, camel case and pascal case in Python. Inspired by Humps for Node"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pyparsing"
 version = "3.0.7"
 description = "Python parsing module"
@@ -1006,7 +1014,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7.1 <3.11"
-content-hash = "415161012701412bd0a42c6e1f558e64f2847e0b156d03223717da178e2b9bf5"
+content-hash = "1e55d58059b25a1d53b7a6a640d2bca41f34d9d6b50797508a658101e891cdd3"
 
 [metadata.files]
 aiofiles = [
@@ -1128,8 +1136,8 @@ certifi = [
     {file = "certifi-2021.10.8.tar.gz", hash = "sha256:78884e7c1d4b00ce3cea67b44566851c4343c120abd683433ce934a68ea58872"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.0.11.tar.gz", hash = "sha256:98398a9d69ee80548c762ba991a4728bfc3836768ed226b3945908d1a688371c"},
-    {file = "charset_normalizer-2.0.11-py3-none-any.whl", hash = "sha256:2842d8f5e82a1f6aa437380934d5e1cd4fcf2003b06fed6940769c164a480a45"},
+    {file = "charset-normalizer-2.0.12.tar.gz", hash = "sha256:2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597"},
+    {file = "charset_normalizer-2.0.12-py3-none-any.whl", hash = "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"},
 ]
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
@@ -1493,6 +1501,10 @@ pydocstyle = [
 pyflakes = [
     {file = "pyflakes-2.4.0-py2.py3-none-any.whl", hash = "sha256:3bb3a3f256f4b7968c9c788781e4ff07dce46bdf12339dcda61053375426ee2e"},
     {file = "pyflakes-2.4.0.tar.gz", hash = "sha256:05a85c2872edf37a4ed30b0cce2f6093e1d0581f8c19d7393122da7e25b2b24c"},
+]
+pyhumps = [
+    {file = "pyhumps-3.5.3-py3-none-any.whl", hash = "sha256:8d7e9865d6ddb6e64a2e97d951b78b5cc827d3d66cda1297310fc83b2ddf51dc"},
+    {file = "pyhumps-3.5.3.tar.gz", hash = "sha256:0ecf7fee84503b45afdd3841ec769b529d32dfaed855e07046ff8babcc0ab831"},
 ]
 pyparsing = [
     {file = "pyparsing-3.0.7-py3-none-any.whl", hash = "sha256:a6c06a88f252e6c322f65faf8f418b16213b51bdfaece0524c1c1bc30c63c484"},

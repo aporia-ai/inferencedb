@@ -2,14 +2,14 @@ apiVersion: skaffold/v2beta26
 kind: Config
 build:
   artifacts:  
-    - image: account-id.dkr.ecr.us-east-2.amazonaws.com/inferencedb
+    - image: ghcr.io/aporia-ai/inferencedb
 deploy:
   helm:
     releases:
       - name: inferencedb
         chartPath: ./charts/inferencedb
         artifactOverrides:
-          image: account-id.dkr.ecr.us-east-2.amazonaws.com/inferencedb
+          image: ghcr.io/aporia-ai/inferencedb
         imageStrategy:
           helm: {}
         setValues:

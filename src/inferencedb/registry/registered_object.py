@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, Optional, Tuple, Type
 
 from pydantic.main import create_model
 
-from inferencedb.core.base_model import BaseModel
+from inferencedb.base_model import BaseModel
 
 
 class RegisteredObjectMetadata:

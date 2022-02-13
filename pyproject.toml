@@ -10,6 +10,7 @@ pydantic = "^1.9.0"
 PyYAML = "^6.0"
 faust = {version = "^1.10.4", extras = ["rocksdb"]}
 python-schema-registry-client = "^2.2.2"
+pyhumps = "^3.5.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

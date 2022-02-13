@@ -1,0 +1,21 @@
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: my-model-inference-logger
+spec:
+  topic: knative-broker-default-my-model-kafka-broker
+  eventProcessor:
+    type: kserve
+    config:
+      protocol: v2
+      partitions: 10
+  schemaProvider:
+    type: kserve
+    config:
+      protocol: v2
+      modelName: my-model
+      namespace: default 
+  destination:
+    type: s3-parquet
+    config:
+      url: s3://blablabla.parquet

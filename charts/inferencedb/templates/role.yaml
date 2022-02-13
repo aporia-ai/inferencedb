@@ -1,0 +1,22 @@
+{{- if .Values.rbac.create }}
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "inferencedb.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "inferencedb.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - "inferencedb.aporia.com"  # indicates the core API group
+  resources:
+  - "inferenceloggers"
+  verbs:
+  - "get"
+  - "list"
+  - "watch"
+  - "create"
+  - "update"
+  - "patch"
+  - "delete"
+{{- end }}

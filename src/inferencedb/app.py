@@ -44,7 +44,7 @@ async def create_app():
         # Create an agent for each InferenceLogger.
         for inference_logger_config in config.inference_loggers:
             inference_logger = InferenceLogger(app, schema_registry, inference_logger_config)
-            inference_logger.start()
+            inference_logger.register()
 
         await worker.start() 
         # await worker.stop()

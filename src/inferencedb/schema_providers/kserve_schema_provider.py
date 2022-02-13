@@ -25,11 +25,12 @@ class KServeSchemaProvider(SchemaProvider):
         self._config = config
 
     async def get_schema(self) -> AvroSchema:
-        model_name = self._config["model_name"]
+        model_name = self._config["modelName"]
         protocol = self._config["protocol"]
         namespace = self._config["namespace"]
         # TODO: Version
 
+        # TODO: Is it more right to query the K8s InferenceService and get status.address.url (contains /infer though)
         url = f'http://{model_name}.{namespace}.svc.cluster.local/{protocol}/models/{model_name}'
 
         # TODO: Consider caching aiohttp session 

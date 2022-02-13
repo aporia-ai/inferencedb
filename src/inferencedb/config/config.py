@@ -4,7 +4,7 @@ from inferencedb.registry.decorators import event_processor
 from pydantic import validator
 from pydantic.main import Extra
 
-from inferencedb.core.base_model import BaseModel
+from inferencedb.base_model import BaseModel
 from .component import ComponentConfig
 
 
@@ -15,7 +15,8 @@ class InferenceLoggerConfig(BaseModel):
         """Configuration for InferenceLoggerConfig."""
 
         extra = Extra.forbid
-    
+
+    name: str 
     topic: str
     schema_provider: ComponentConfig
     event_processor: ComponentConfig

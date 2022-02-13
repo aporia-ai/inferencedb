@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-from inferencedb.core.base_model import BaseModel
+from inferencedb.base_model import BaseModel
 
 
 class ComponentConfig(BaseModel):

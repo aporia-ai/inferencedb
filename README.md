@@ -163,10 +163,10 @@ Do this multiple times and you should see it in the S3 bucket.
 
 
 **TODO:**
+ * Make sure multiple InfrenceLogger work
+ * Add support for finalizer in kubernetes CRD & deletion of the topic etc
  * Fix all the TODOs in the code.
- * Add support for Kubernetes CRDs
- * Consider adding support for an endpoint to publish messages to the topic instead KNative Eventing, brokers, etc?
+ * Add support for an endpoint to publish messages to the topic instead KNative Eventing, brokers, etc.
  * Performance test (see KServe quickstart, they have automatic stress test)
  * For OSS: Seldon Core, FastAPI support (can just use Kafka API, but need to think what to do with schema :X)
- * Remove "core" package"
  * Docs, CI/CD, GitHub container registry (for my-model and kafka s3 connector as well!), etc.
