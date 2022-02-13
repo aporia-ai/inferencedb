@@ -162,11 +162,18 @@ Do this multiple times and you should see it in the S3 bucket.
  * Logs on Kafka Connect - there might be an issue with the S3 sink.
 
 
-**TODO:**
+**Must have:**
  * Make sure multiple InfrenceLogger work
+ * Add support for an endpoint to publish messages to the topic instead KNative Eventing, brokers, etc.
+ * Docs, CI/CD, GitHub container registry (for my-model and kafka s3 connector as well!), etc.
+ * Manual schema provider (using Avro)
+ * Support numpy schema
+ * Infer schema from first prediction
+
+**Low priority:**
  * Add support for finalizer in kubernetes CRD & deletion of the topic etc
  * Fix all the TODOs in the code.
- * Add support for an endpoint to publish messages to the topic instead KNative Eventing, brokers, etc.
  * Performance test (see KServe quickstart, they have automatic stress test)
  * For OSS: Seldon Core, FastAPI support (can just use Kafka API, but need to think what to do with schema :X)
- * Docs, CI/CD, GitHub container registry (for my-model and kafka s3 connector as well!), etc.
+ * For OSS: Aporia destination
+ * Add better support for namespaces - no need to install InferenceDB in each namespace separately
