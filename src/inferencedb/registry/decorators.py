@@ -65,7 +65,7 @@ def schema_provider(name: str) -> Callable[[Callable], Callable]:
     """Decorator for registering schema providers.
 
     Args:
-        name: User friendly name for the schemas provider.
+        name: User friendly name for the schema provider.
 
     Returns:
         Decorated class.

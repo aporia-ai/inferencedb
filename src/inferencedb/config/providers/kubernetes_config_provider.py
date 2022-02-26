@@ -51,8 +51,8 @@ class KubernetesConfigProvider(ConfigProvider):
                     "inferenceLoggers": [{
                         "name": f'{item["metadata"]["namespace"]}-{item["metadata"]["name"]}',
                         "topic": item["spec"]["topic"],
-                        "eventProcessor": item["spec"]["eventProcessor"],
-                        "schemaProvider": item["spec"].get("schemaProvider"),
+                        "events": item["spec"]["events"],
+                        "schema": item["spec"].get("schema"),
                         "destination": item["spec"]["destination"],
                     } for item in result["items"]],
                 })

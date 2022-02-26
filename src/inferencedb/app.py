@@ -5,7 +5,7 @@ from inferencedb.core.inference_logger import InferenceLogger
 import faust
 import asyncio
 
-from inferencedb.core.utils import cancling_background_task
+from inferencedb.utils.asyncio_utils import cancling_background_task
 from .settings import Settings
 from schema_registry.client import AsyncSchemaRegistryClient
 

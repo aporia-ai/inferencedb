@@ -1,8 +1,7 @@
 from typing import Any, Dict, List, Optional
 from inferencedb.registry.decorators import event_processor
 
-from pydantic import validator
-from pydantic.main import Extra
+from pydantic import Field, Extra
 
 from inferencedb.core.base_model import BaseModel
 from .component import ComponentConfig
@@ -18,8 +17,8 @@ class InferenceLoggerConfig(BaseModel):
 
     name: str 
     topic: str
-    schema_provider: Optional[ComponentConfig]
-    event_processor: ComponentConfig
+    event_processor: ComponentConfig = Field(None, alias="events")
+    schema_provider: Optional[ComponentConfig] = Field(None, alias="schema")
     destination: ComponentConfig
 
 

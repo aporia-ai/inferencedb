@@ -6,7 +6,7 @@ from .schema_provider import SchemaProvider
 
 
 def create_schema_provider(type: str, params: Optional[Dict[str, Any]] = None) -> SchemaProvider:
-    """Creates an SchemaProvider object.
+    """Creates a SchemaProvider object.
 
     Args:
         type: SchemaProvider type

@@ -24,7 +24,7 @@ spec:
               properties:
                 topic:
                   type: string
-                schemaProvider:
+                schema:
                   type: object
                   properties:
                     type:
@@ -32,7 +32,7 @@ spec:
                     config:
                       type: object
                       x-kubernetes-preserve-unknown-fields: true
-                eventProcessor:
+                events:
                   type: object
                   properties:
                     type:

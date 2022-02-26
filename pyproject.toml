@@ -12,6 +12,8 @@ faust = {version = "^1.10.4", extras = ["fast", "rocksdb"]}
 python-schema-registry-client = "^2.2.2"
 pyhumps = "^3.5.3"
 numpy = "^1.22.2"
+pyarrow = "^7.0.0"
+pandavro = "^1.6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
