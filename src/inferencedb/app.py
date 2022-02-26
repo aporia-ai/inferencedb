@@ -1,11 +1,11 @@
 from inferencedb.config.config import InferenceLoggerConfig
 from inferencedb.config.factory import create_config_provider, generate_config_from_dict
 from inferencedb.config.providers.kubernetes_config_provider import KubernetesConfigProvider
-from inferencedb.inference_logger import InferenceLogger
+from inferencedb.core.inference_logger import InferenceLogger
 import faust
 import asyncio
 
-from inferencedb.utils import cancling_background_task
+from inferencedb.core.utils import cancling_background_task
 from .settings import Settings
 from schema_registry.client import AsyncSchemaRegistryClient
 

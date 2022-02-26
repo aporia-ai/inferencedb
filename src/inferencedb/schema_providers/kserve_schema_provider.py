@@ -45,12 +45,30 @@ class KServeSchemaProvider(SchemaProvider):
             "name": "MyModel", # TODO
             "fields": [
                 # Convert all inputs to Avro fields
-                *[{"name": field["name"].replace(".", "_"), "type": KSERVE_DATATYPE_TO_AVRO[field["datatype"]]}
-                  for field in metadata["inputs"]],
+                {
+                    "name": "inputs",
+                    "type": {
+                        "type": "record",
+                        "name": "MyModelInputs",
+                        "fields": [{
+                            "name": field["name"].replace(".", "_"),
+                            "type": KSERVE_DATATYPE_TO_AVRO[field["datatype"]]
+                        } for field in metadata["inputs"]],
+                    }
+                },
 
                 # Convert all outputs to Avro fields
-                *[{"name": field["name"].replace(".", "_"), "type": KSERVE_DATATYPE_TO_AVRO[field["datatype"]]}
-                  for field in metadata["outputs"]]
+                {
+                    "name": "outputs",
+                    "type": {
+                        "type": "record",
+                        "name": "MyModelOutputs",
+                        "fields": [{
+                            "name": field["name"].replace(".", "_"),
+                            "type": KSERVE_DATATYPE_TO_AVRO[field["datatype"]]
+                        } for field in metadata["outputs"]],
+                    }
+                },
             ],
         })
     

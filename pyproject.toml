@@ -5,12 +5,13 @@ description = ""
 authors = ["Aporia <info@aporia.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.7.1 <3.11"
+python = ">=3.9,<4.0"
 pydantic = "^1.9.0"
 PyYAML = "^6.0"
-faust = {version = "^1.10.4", extras = ["rocksdb"]}
+faust = {version = "^1.10.4", extras = ["fast", "rocksdb"]}
 python-schema-registry-client = "^2.2.2"
 pyhumps = "^3.5.3"
+numpy = "^1.22.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

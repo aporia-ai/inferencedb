@@ -52,7 +52,7 @@ class KubernetesConfigProvider(ConfigProvider):
                         "name": f'{item["metadata"]["namespace"]}-{item["metadata"]["name"]}',
                         "topic": item["spec"]["topic"],
                         "eventProcessor": item["spec"]["eventProcessor"],
-                        "schemaProvider": item["spec"]["schemaProvider"],
+                        "schemaProvider": item["spec"].get("schemaProvider"),
                         "destination": item["spec"]["destination"],
                     } for item in result["items"]],
                 })
