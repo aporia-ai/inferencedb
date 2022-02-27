@@ -44,65 +44,55 @@ class AvroSchemaProvider(SchemaProvider):
 
         self._schema = response.schema
 
-        if self._is_columnar:
-            # Extract input column names from the schema if the user didn't specify any.
-            if self._input_column_names is not None:
-                self._input_column_names = self._extract_column_names("inputs")
-
-            # Extract output column names from the schema if the user didn't specify any.
-            if self._output_column_names is not None:
-                self._output_column_names = self._extract_column_names("outputs")
-
     async def serialize(self, inference: Inference) -> AsyncIterator[bytes]:
+        # Override input columns
+        if self._input_column_names is not None:
+            inference.inputs.columns = self._input_column_names
+        elif (
+            isinstance(inference.inputs.columns, pd.RangeIndex) or
+            inference.inputs.columns == [str(i) for i in range(len(inference.inputs.columns))]
+        ):
+            inference.inputs.columns = [f"X{i}" for i in range(len(inference.inputs.columns))]
+        
+        # Override output columns
+        if self._output_column_names is not None:
+            inference.outputs.columns = self._output_column_names
+        elif (
+            isinstance(inference.outputs.columns, pd.RangeIndex) or
+            inference.outputs.columns == [str(i) for i in range(len(inference.outputs.columns))]
+        ):
+            inference.outputs.columns = [f"Y{i}" for i in range(len(inference.outputs.columns))]
+        
         if self._schema is None:
-            self._generate_schema_from_inference()
+            await self._generate_schema_from_inference(inference)
 
         # TODO: Make sure the shape of every input & output is the same
-
-        for (_, inputs), (_, outputs) in zip(inference.inputs.iterrows(), inference.outputs.iterrows()):
+        for i, ((_, inputs), (_, outputs)) in enumerate(zip(inference.inputs.iterrows(), inference.outputs.iterrows())):
+            print(self._schema, inputs.to_dict(), outputs.to_dict())
+            
             yield await self._serializer.encode_record_with_schema(
                 subject=self._logger_name,
                 schema=self._schema,
                 record={
-                    # "id": inference.id, # TODO
-                    "inputs": inputs.to_dict(),
-                    "outputs": outputs.to_dict()
+                    "id": f"{inference.id}_{i}",
+                    **inputs.to_dict(),
+                    **outputs.to_dict()
                 },
             )
 
     async def _generate_schema_from_inference(self, inference: Inference):
-        # Use input column names from config if specified
-        if self._input_column_names is not None:
-            inference.inputs.columns = self._input_column_names
-
-        # Use output column names from config if specified
-        if self._input_column_names is not None:
-            inference.inputs.columns = self._input_column_names
-
-        # Build schema
         self._schema = AvroSchema({
             "type": "record",
             "namespace": AVRO_NAMESPACE,
-            "name": self._logger_name,
+            "name": self._logger_name.replace("-", "_"),
             "fields": [
-                {
-                    "name": "inputs",
-                    "type": schema_infer(inference.inputs)
-                },
-                {
-                    "name": "outputs",
-                    "type": schema_infer(inference.outputs)
-                },
+                { "name": "id", "type": "string" },
+                *schema_infer(inference.inputs)["fields"],
+                *schema_infer(inference.outputs)["fields"],
             ],
         })
 
-        await self._schema_registry.register(self._subject, self._schema)
-        
-    def _extract_column_names(self, field_name: str) -> List[str]:
-        fields = next(
-            field["type"]["fields"] 
-            for field in self._schema.schema["fields"]
-            if field["name"] == field_name
-        )
+        self._input_column_names = inference.inputs.columns
+        self._output_column_names = inference.outputs.columns
 
-        return [field["name"] for field in fields]
+        await self._schema_registry.register(self._subject, self._schema)
