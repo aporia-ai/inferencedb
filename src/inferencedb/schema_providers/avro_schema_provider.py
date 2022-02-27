@@ -59,11 +59,12 @@ class AvroSchemaProvider(SchemaProvider):
 
         # TODO: Make sure the shape of every input & output is the same
 
-        for inputs, outputs in zip(inference.inputs.iterrows(), inference.outputs.iterrows()):
+        for (_, inputs), (_, outputs) in zip(inference.inputs.iterrows(), inference.outputs.iterrows()):
             yield await self._serializer.encode_record_with_schema(
                 subject=self._logger_name,
                 schema=self._schema,
                 record={
+                    # "id": inference.id, # TODO
                     "inputs": inputs.to_dict(),
                     "outputs": outputs.to_dict()
                 },

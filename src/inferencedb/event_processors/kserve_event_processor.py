@@ -1,10 +1,11 @@
 from typing import Any, Dict
 
 import faust
+from inferencedb.core.inference import Inference
 
 from inferencedb.registry.decorators import event_processor
 from inferencedb.utils.kserve_utils import parse_kserve_request, parse_kserve_response
-from .event_processor import EventProcessor, Inference
+from .event_processor import EventProcessor
 
 
 INFERENCE_REQUEST_TYPE = "org.kubeflow.serving.inference.request"
@@ -19,9 +20,10 @@ class KServeEventProcessor(EventProcessor):
         # TODO: Validate config
         self._table = app.Table(
             # TODO: Need different name
-            name="kserve-event-processor-state_1",
-            partitions=config.get("partitions", None))
-
+            name="kserve-event-processor-state_3",
+            partitions=config.get("partitions", None),
+            value_type=bytes)
+        
     async def process_event(self, event) -> Inference:
         # Basic validations on the event version.
         event_id = event.headers.get("ce_id", "").decode("utf-8")
@@ -34,14 +36,14 @@ class KServeEventProcessor(EventProcessor):
         # Add data to event, depending on the event type.
         event_type = event.headers.get("ce_type", "").decode("utf-8")
         
+        inference = Inference.deserialize(self._table.get(event_id, None))
+        
         if event_type == INFERENCE_REQUEST_TYPE:
-            inference = Inference.deserialize(self._table.get(event_id, {}))
             inference.inputs = parse_kserve_request(event.value)
         elif event_type == INFERENCE_RESPONSE_TYPE:
             if "id" not in event.value:
                 return
 
-            inference = Inference.deserialize(self._table.get(event_id, {}))
             inference.id = event.value["id"]
             inference.outputs = parse_kserve_response(event.value)
         else:
@@ -51,6 +53,10 @@ class KServeEventProcessor(EventProcessor):
         self._table[event_id] = inference.serialize()
 
         # Do we have all we need (request + response)?
-        if inference.inputs is not None and inference.outputs is not None:
+        if (
+            inference.id is not None and
+            inference.inputs is not None and
+            inference.outputs is not None
+        ):
             self._table.pop(event_id)
             return inference

@@ -14,6 +14,7 @@ pyhumps = "^3.5.3"
 numpy = "^1.22.2"
 pyarrow = "^7.0.0"
 pandavro = "^1.6.0"
+quickle = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

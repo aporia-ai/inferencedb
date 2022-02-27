@@ -936,6 +936,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "quickle"
+version = "0.4.0"
+description = "A quicker pickle"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "rfc3986"
 version = "1.5.0"
 description = "Validating URI References per RFC 3986"
@@ -1092,7 +1100,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<4.0"
-content-hash = "6babfd1cb9585714d4fa4c42143cca79e874d083e017d9c029cb8f011a914bd6"
+content-hash = "de4a47c5221e3424889de2d86a4ef5c078b70f4d697234c312c03a024d780b92"
 
 [metadata.files]
 aiodns = [
@@ -1916,6 +1924,23 @@ pyyaml = [
     {file = "PyYAML-6.0-cp39-cp39-win32.whl", hash = "sha256:b5b9eccad747aabaaffbc6064800670f0c297e52c12754eb1d976c57e4f74dcb"},
     {file = "PyYAML-6.0-cp39-cp39-win_amd64.whl", hash = "sha256:b3d267842bf12586ba6c734f89d1f5b871df0273157918b0ccefa29deb05c21c"},
     {file = "PyYAML-6.0.tar.gz", hash = "sha256:68fb519c14306fec9720a2a5b45bc9f0c8d1b9c72adf45c37baedfcd949c35a2"},
+]
+quickle = [
+    {file = "quickle-0.4.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:0bce1c4dbfb9431f2a26bb869bf548501913726c9d33cccfe1d6ebf2fed33cff"},
+    {file = "quickle-0.4.0-cp38-cp38-manylinux1_i686.whl", hash = "sha256:7d39aa1c5102ff692e085a13a481c6170261bfaf518d1162e3971a12199afd6b"},
+    {file = "quickle-0.4.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:e895a5ecf43d8d654f17a805949ce5176d1811b4e9e104e8a02cfb0e108a33ac"},
+    {file = "quickle-0.4.0-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:8b0a31efce2f8a5ff47257637d929c49982d1323e6b359798d45fe86a0a49ff6"},
+    {file = "quickle-0.4.0-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:ea72e02a5a3864e0451eb09f0074738cc633a3e092bf8b616c60e781d11f9262"},
+    {file = "quickle-0.4.0-cp38-cp38-win32.whl", hash = "sha256:8bff61da5bfe354da6c30e0ec7bc3fde74b3257230bd867d5504c10ca2ff3b7a"},
+    {file = "quickle-0.4.0-cp38-cp38-win_amd64.whl", hash = "sha256:f6e1ff6ae477c5011eafe1315f7139c6a727da284d8ed833887fbfae9cd5ef72"},
+    {file = "quickle-0.4.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:7712456c922e76c0818421ad0e79e8099653244718cd219a4f758b31096d6a2e"},
+    {file = "quickle-0.4.0-cp39-cp39-manylinux1_i686.whl", hash = "sha256:56c2676961af37c37fd57328b5486d08b8e41df9a619fce5a7377ec065e98362"},
+    {file = "quickle-0.4.0-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:1118350f4310186a9dfdfc68e0a0c9e35d1aec387a13e2df56a4d7c9c4fd9f88"},
+    {file = "quickle-0.4.0-cp39-cp39-manylinux2010_i686.whl", hash = "sha256:6e9105509c6e71e899668415f79d5f409e1fa2d2c333bf49b460b1c8b47f3795"},
+    {file = "quickle-0.4.0-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:e8b1ba16ffd5ea6a5ce1546e5245a03f64f9f84ee7022b545c62106194399529"},
+    {file = "quickle-0.4.0-cp39-cp39-win32.whl", hash = "sha256:c9af31a4ab4bc60510cfee1cd1cbe903d45e2fd9fc9bbc69f8831be65a0cb3c5"},
+    {file = "quickle-0.4.0-cp39-cp39-win_amd64.whl", hash = "sha256:45b87d04a428bb6a1b97ca9b66654e1aa8305536f3289e4c102b280219ec055a"},
+    {file = "quickle-0.4.0.tar.gz", hash = "sha256:b42b07c8ccb1340c89d3e7a85a09441a839e2afad791f13c19cb849139edee97"},
 ]
 rfc3986 = [
     {file = "rfc3986-1.5.0-py2.py3-none-any.whl", hash = "sha256:a86d6e1f5b1dc238b218b012df0aa79409667bb209e58da56d0b94704e712a97"},

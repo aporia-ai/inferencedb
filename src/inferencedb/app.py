@@ -1,4 +1,3 @@
-from inferencedb.config.config import InferenceLoggerConfig
 from inferencedb.config.factory import create_config_provider, generate_config_from_dict
 from inferencedb.config.providers.kubernetes_config_provider import KubernetesConfigProvider
 from inferencedb.core.inference_logger import InferenceLogger
