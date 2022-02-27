@@ -86,7 +86,7 @@ class AvroSchemaProvider(SchemaProvider):
             "namespace": AVRO_NAMESPACE,
             "name": self._logger_name.replace("-", "_"),
             "fields": [
-                { "name": "id", "type": "string" },
+                {"name": "id", "type": "string"},
                 *schema_infer(inference.inputs)["fields"],
                 *schema_infer(inference.outputs)["fields"],
             ],

@@ -24,7 +24,7 @@ class InferenceLogger:
         self._schema_registry = schema_registry
 
         # TODO: Comment
-        self._target_topic = app.topic(f"inferencedb-{config.name}-avro")
+        self._target_topic = app.topic(config.name)
 
         # TODO: Comment
         schema_provider_config = config.schema_provider
@@ -41,6 +41,7 @@ class InferenceLogger:
         # TODO: Comment
         self._source_topic = app.topic(self._config.topic)
         self._event_processor = create_event_processor(config.event_processor.type, {
+            "logger_name": config.name,
             "app": app, 
             "config": config.event_processor.config,
         })

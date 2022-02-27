@@ -1,14 +1,14 @@
 {{- if .Values.rbac.create }}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: {{ if .Values.rbac.namespaced }}RoleBinding{{ else }}ClusterRoleBinding{{ end }}
 metadata:
   name: {{ include "inferencedb.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  {{ if .Values.rbac.namespaced }}namespace: {{ .Release.Namespace }}{{ end }}
   labels:
     {{- include "inferencedb.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: {{ if .Values.rbac.namespaced }}Role{{ else }}ClusterRole{{ end }}
   name: {{ include "inferencedb.fullname" . }}
 subjects:
 - kind: ServiceAccount

@@ -1,9 +1,9 @@
 {{- if .Values.rbac.create }}
-kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
+kind: {{ if .Values.rbac.namespaced }}Role{{ else }}ClusterRole{{ end }}
 metadata:
   name: {{ include "inferencedb.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  {{ if .Values.rbac.namespaced }}namespace: {{ .Release.Namespace }}{{  end }}
   labels:
     {{- include "inferencedb.labels" . | nindent 4 }}
 rules:

@@ -14,6 +14,9 @@ fullnameOverride: ""
 rbac:
   # Specifies whether RBAC resources should be created
   create: true
+  # If this is false, the service account will be able to read Aporia's resources from any namespace.
+  # NOTE: You also need to change this in the Kubernetes config provider's config!
+  namespaced: false
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -58,7 +61,7 @@ serviceMonitor:
   enabled: false
 
   ## labels for ServiceMonitor, so that Prometheus can select it
-  selector:
+  selector: 
     prometheus: kube-prometheus
 
   ## the ServiceMonitor web endpoint path
@@ -69,8 +72,7 @@ serviceMonitor:
 
 logLevel: WARNING
 
-inferencedb:
-  configProvider:
-    type: kubernetes
-    args: {}
-  config: ""
+configProvider:
+  type: kubernetes
+  args:
+    is_namespaced: false

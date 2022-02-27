@@ -20,8 +20,9 @@ class ConfigProvider(ABC):
         Args:
             new_config: New config
         """
-        self._config = new_config
-        self._update_event.set()
+        if new_config != self._config:
+            self._config = new_config
+            self._update_event.set()
 
     async def wait_for_update(self):
         """Waits for the current configuration to be updated."""

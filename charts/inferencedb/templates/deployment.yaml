@@ -42,9 +42,9 @@ spec:
             - name: INFERENCEDB_LOG_LEVEL
               value: {{ .Values.logLevel }}
             - name: INFERENCEDB_CONFIG_PROVIDER
-              value: {{ .Values.inferencedb.configProvider.type | quote }}
+              value: {{ .Values.configProvider.type | quote }}
             - name: INFERENCEDB_CONFIG_PROVIDER_ARGS
-              value: {{ .Values.inferencedb.configProvider.args | toJson | quote }}
+              value: {{ .Values.configProvider.args | toJson | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
