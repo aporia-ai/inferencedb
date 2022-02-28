@@ -1,6 +1,6 @@
 # Default values for inferencedb.
 
-replicaCount: 1
+replicaCount: 3
 image:
   repository: ghcr.io/aporia-ai/inferencedb
   pullPolicy: IfNotPresent
@@ -10,6 +10,10 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 6066
 
 rbac:
   # Specifies whether RBAC resources should be created

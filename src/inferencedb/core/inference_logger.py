@@ -78,10 +78,11 @@ class InferenceLogger:
 
     def register(self):
         async def agent(stream):
-            await self._schema_provider.fetch()
-
             # Process every inference event
-            async for event in stream.events():
+            async for event in stream.group_by(
+                name=self._config.name,
+                key=self._event_processor.get_group_key,
+            ):
                 inference = await self._event_processor.process_event(event)
                 if inference is None:
                     continue
@@ -90,4 +91,8 @@ class InferenceLogger:
                 async for item in self._schema_provider.serialize(inference):
                     yield item
 
-        self._app.agent(self._source_topic, sink=[self._target_topic])(agent)
+        self._app.agent(
+            name=self._config.name,
+            channel=self._source_topic,
+            sink=[self._target_topic]
+        )(agent)

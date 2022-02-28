@@ -1,36 +1,21 @@
+# First model
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
-  name: "sklearn-iris"
+  name: "sklearn-iris-1"
 spec:
   predictor:
     logger:
       mode: all
-      url: http://kafka-broker-ingress.knative-eventing.svc.cluster.local/default/inferencedb-kafka-broker
+      url: http://kafka-broker-ingress.knative-eventing.svc.cluster.local/default/sklearn-iris-1-kafka-brokerxyzft
     sklearn:
       protocolVersion: "v2"
       storageUri: "gs://seldon-models/sklearn/iris"
 ---
-apiVersion: inferencedb.aporia.com/v1alpha1
-kind: InferenceLogger
-metadata:
-  name: my-model
-  namespace: default
-spec:
-  topic: knative-broker-default-inferencedb-kafka-broker
-  events:
-    type: kserve
-    config:
-      partitions: 1
-  destination:
-    type: s3-parquet
-    config:
-      url: s3://my-models-data/my-model.parquet
----
 apiVersion: eventing.knative.dev/v1
 kind: Broker
 metadata:
-  name: inferencedb-kafka-broker
+  name: sklearn-iris-1-kafka-brokerxyzft
   namespace: default
   annotations:
     eventing.knative.dev/broker.class: Kafka
@@ -39,16 +24,140 @@ spec:
     apiVersion: v1
     kind: ConfigMap
     name: inferencedb-kafka-broker-config
-    namespace: default
+    namespace: knative-eventing
+---
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: sklearn-iris-1-inference-loggery
+  namespace: default
+spec:
+  topic: knative-broker-default-sklearn-iris-1-kafka-brokerxyzft
+  schema:
+    type: avro
+    config:
+      columnNames:
+        inputs: [sepal0, petal0, bla, lol]
+        outputs: [flower]
+  events:
+    type: kserve
+    config: {}
+  destination:
+    type: s3-parquet
+    config:
+      url: s3://my-models-data/my-model.parquet
+---
+
+
+# Second model
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "sklearn-iris-2"
+spec:
+  predictor:
+    logger:
+      mode: all
+      url: http://kafka-broker-ingress.knative-eventing.svc.cluster.local/default/sklearn-iris-2-kafka-brokerxyzft
+    sklearn:
+      protocolVersion: "v2"
+      storageUri: "gs://seldon-models/sklearn/iris"
+---
+apiVersion: eventing.knative.dev/v1
+kind: Broker
+metadata:
+  name: sklearn-iris-2-kafka-brokerxyzft
+  namespace: default
+  annotations:
+    eventing.knative.dev/broker.class: Kafka
+spec:
+  config:
+    apiVersion: v1
+    kind: ConfigMap
+    name: inferencedb-kafka-broker-config
+    namespace: knative-eventing
+---
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: sklearn-iris-2-inference-loggery
+  namespace: default
+spec:
+  topic: knative-broker-default-sklearn-iris-2-kafka-brokerxyzft
+  schema:
+    type: avro
+    config:
+      columnNames:
+        inputs: [sepal2, petal2, bla2, lol2]
+        outputs: [flower2]
+  events:
+    type: kserve
+    config: {}
+  destination:
+    type: s3-parquet
+    config:
+      url: s3://my-models-data/my-model.parquet
+---
+
+# Third model
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "sklearn-iris-3"
+spec:
+  predictor:
+    logger:
+      mode: all
+      url: http://kafka-broker-ingress.knative-eventing.svc.cluster.local/default/sklearn-iris-3-kafka-brokerxyzft
+    sklearn:
+      protocolVersion: "v2"
+      storageUri: "gs://seldon-models/sklearn/iris"
+---
+apiVersion: eventing.knative.dev/v1
+kind: Broker
+metadata:
+  name: sklearn-iris-3-kafka-brokerxyzft
+  namespace: default
+  annotations:
+    eventing.knative.dev/broker.class: Kafka
+spec:
+  config:
+    apiVersion: v1
+    kind: ConfigMap
+    name: inferencedb-kafka-broker-config
+    namespace: knative-eventing
+---
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: sklearn-iris-3-inference-loggery
+  namespace: default
+spec:
+  topic: knative-broker-default-sklearn-iris-3-kafka-brokerxyzft
+  schema:
+    type: avro
+    config:
+      columnNames:
+        inputs: [sepal2, petal2, bla2, lol2]
+        outputs: [flower2]
+  events:
+    type: kserve
+    config: {}
+  destination:
+    type: s3-parquet
+    config:
+      url: s3://my-models-data/my-model.parquet
+
+
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: inferencedb-kafka-broker-config
-  namespace: default
+  namespace: knative-eventing
 data:
   # Number of topic partitions
-  default.topic.partitions: "10"
+  default.topic.partitions: "8"
   # Replication factor of topic messages.
   default.topic.replication.factor: "1"
   # A comma separated list of bootstrap servers. (It can be in or out the k8s cluster)

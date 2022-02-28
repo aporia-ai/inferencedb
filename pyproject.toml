@@ -8,13 +8,13 @@ authors = ["Aporia <info@aporia.com>"]
 python = ">=3.9,<4.0"
 pydantic = "^1.9.0"
 PyYAML = "^6.0"
-faust = {version = "^1.10.4", extras = ["fast", "rocksdb"]}
 python-schema-registry-client = "^2.2.2"
 pyhumps = "^3.5.3"
 numpy = "^1.22.2"
 pyarrow = "^7.0.0"
 pandavro = "^1.6.0"
 quickle = "^0.4.0"
+faust-streaming = {version = "^0.8.4", extras = ["rocksdb", "fast"]}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

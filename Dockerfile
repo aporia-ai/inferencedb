@@ -13,4 +13,4 @@ RUN poetry install --no-interaction --no-ansi --no-dev
 
 COPY . .
 WORKDIR /inferencedb/src
-ENTRYPOINT [ "python", "-m", "inferencedb.app" ]
+ENTRYPOINT [ "python", "-u", "-m", "inferencedb.main" ]

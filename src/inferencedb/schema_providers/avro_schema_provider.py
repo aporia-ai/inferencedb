@@ -67,9 +67,7 @@ class AvroSchemaProvider(SchemaProvider):
             await self._generate_schema_from_inference(inference)
 
         # TODO: Make sure the shape of every input & output is the same
-        for i, ((_, inputs), (_, outputs)) in enumerate(zip(inference.inputs.iterrows(), inference.outputs.iterrows())):
-            print(self._schema, inputs.to_dict(), outputs.to_dict())
-            
+        for i, ((_, inputs), (_, outputs)) in enumerate(zip(inference.inputs.iterrows(), inference.outputs.iterrows())):            
             yield await self._serializer.encode_record_with_schema(
                 subject=self._logger_name,
                 schema=self._schema,

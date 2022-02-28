@@ -20,32 +20,35 @@ class KServeEventProcessor(EventProcessor):
                  config: Dict[str, Any]):
         # TODO: Validate config
         self._table = app.Table(
-            name=f"kserve-event-processor-state-{logger_name}",
-            partitions=config.get("partitions", None),
-            value_type=bytes)
+            name=f"kserve-event-processor-{logger_name}__3",
+            value_type=bytes
+        ).tumbling(10.0, expires=10.0)
         
     async def process_event(self, event) -> Inference:
         # Basic validations on the event version.
-        event_id = event.headers.get("ce_id", "").decode("utf-8")
+        event_id = faust.current_event().headers.get("ce_id", "").decode("utf-8")
         if not event_id:
             return
 
-        if event.value is None:
+        if event is None:
             return
         
         # Add data to event, depending on the event type.
-        event_type = event.headers.get("ce_type", "").decode("utf-8")
-        
-        inference = Inference.deserialize(self._table.get(event_id, None))
+        event_type = faust.current_event().headers.get("ce_type", "").decode("utf-8")
+
+        try:
+            inference = Inference.deserialize(self._table[event_id].value())
+        except KeyError:
+            inference = Inference()
         
         if event_type == INFERENCE_REQUEST_TYPE:
-            inference.inputs = parse_kserve_request(event.value)
+            inference.inputs = parse_kserve_request(event)
         elif event_type == INFERENCE_RESPONSE_TYPE:
-            if "id" not in event.value:
+            if "id" not in event:
                 return
 
-            inference.id = event.value["id"]
-            inference.outputs = parse_kserve_response(event.value)
+            inference.id = event["id"]
+            inference.outputs = parse_kserve_response(event)
         else:
             return
             
@@ -60,3 +63,7 @@ class KServeEventProcessor(EventProcessor):
         ):
             self._table.pop(event_id)
             return inference
+
+    @staticmethod
+    def get_group_key(event):
+        return faust.current_event().headers.get("ce_id", "").decode("utf-8")

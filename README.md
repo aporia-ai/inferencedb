@@ -101,7 +101,7 @@ metadata:
   namespace: knative-eventing
 data:
   # Number of topic partitions
-  default.topic.partitions: "10"
+  default.topic.partitions: "8"
   # Replication factor of topic messages.
   default.topic.replication.factor: "1"
   # A comma separated list of bootstrap servers. (It can be in or out the k8s cluster)
