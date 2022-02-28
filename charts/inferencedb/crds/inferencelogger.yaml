@@ -40,6 +40,13 @@ spec:
                     config:
                       type: object
                       x-kubernetes-preserve-unknown-fields: true
+                filters:
+                  type: object
+                  properties:
+                    modelName:
+                      type: string
+                    modelVersion:
+                      type: string
                 destination:
                   type: object
                   properties:

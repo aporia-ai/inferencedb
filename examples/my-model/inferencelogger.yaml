@@ -1,21 +1,61 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: my-model
+  namespace: production
+spec:
+  predictor:
+    logger:
+      mode: all
+      url: http://inferencedb/production/my-model
+    xgboost:
+      storageUri: s3://my-models/my-model
+---
 apiVersion: inferencedb.aporia.com/v1alpha1
 kind: InferenceLogger
 metadata:
-  name: my-model-inference-logger
+  name: my-model
+  namespace: production
 spec:
-  topic: knative-broker-default-my-model-kafka-broker
-  eventProcessor:
+  topic: my-model
+  events:
     type: kserve
     config:
       protocol: v2
-      partitions: 10
-  schemaProvider:
-    type: kserve
-    config:
-      protocol: v2
-      modelName: my-model
-      namespace: default 
   destination:
     type: s3-parquet
     config:
-      url: s3://blablabla.parquet
+      url: s3://my-models-data/my-model.parquet
+---
+apiVersion: aporia.com/v1alpha1
+kind: MonitoredModel
+metadata:
+  name: my-model
+  namespace: production
+---
+apiVersion: aporia.com/v1alpha1
+kind: MonitoredModelVersion
+metadata:
+  name: my-model-v1
+  namespace: production
+spec:
+  model: my-model
+  version: v1
+  datasets:
+    serving:
+      dataSource:
+        type: file
+        config:
+          path: "s3://aporia-data/serving.parquet"
+      schema:
+        prediction:
+          column: proba
+          type: numeric
+        label:
+          column: did_buy_insurance
+          type: boolean
+    training:
+      dataSource:
+        type: file
+        config:
+          path: "s3://aporia-data/training.parquet"

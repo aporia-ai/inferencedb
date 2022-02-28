@@ -20,10 +20,25 @@ app = faust.App(
     origin="inferencedb"
 )
 
+
 config = generate_config_from_dict(json.loads(os.environ["CONFIG"]))
 
 # Connect to schema registry.
 schema_registry = AsyncSchemaRegistryClient(url=settings.kafka_schema_registry_url)
+
+
+# Remove old InferenceLogger Kafka connectors.
+@app.task(on_leader=True)
+async def remove_old_inferenceloggers():
+    config_provider = create_config_provider(
+        name=settings.config_provider,
+        params=settings.config_provider_args,
+    )
+
+    async def remove_kafka_connector(inference_logger: dict):
+        print("REMOVING KAFKA CONNECTOR FOR RESOURCE", inference_logger)
+
+    await config_provider.manage_finalizers(remove_kafka_connector)
 
 
 # Create all inference loggers.

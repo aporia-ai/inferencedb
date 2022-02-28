@@ -45,3 +45,27 @@ spec:
     type: s3-parquet
     config:
       url: s3://my-models-data/my-model.parquet
+---
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: sklearn-mms-model2-c
+  namespace: default
+spec:
+  topic: knative-broker-default-sklearn-mms-broker
+  schema:
+    type: avro
+    config:
+      columnNames:
+        inputs: [sepal_width, petal_width, sepal_length, petal_length]
+        outputs: [flower]
+  events:
+    type: kserve
+    config: {}
+  filters:
+    modelName: model2
+    # modelVersion: v2
+  destination:
+    type: s3-parquet
+    config:
+      url: s3://my-models-data/my-model.parquet

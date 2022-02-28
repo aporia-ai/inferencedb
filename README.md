@@ -5,7 +5,7 @@
 Install KServe using their quickstart (includes KServe, Istio, KNative): 
 
 ```
-curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.7/hack/quick_install.sh" | bash
+curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.8/hack/quick_install.sh" | bash
 ```
 
 Install KNative Eventing

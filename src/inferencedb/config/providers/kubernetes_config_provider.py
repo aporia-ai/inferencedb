@@ -3,9 +3,10 @@ import logging
 import os
 from pathlib import Path
 import ssl
-from typing import List, Optional
+from typing import Awaitable, Callable, List, Optional
 
 import aiohttp
+from inferencedb.config.config import InferenceLoggerConfig
 
 from inferencedb.registry.decorators import config_provider
 from .config_provider import ConfigProvider
@@ -14,6 +15,7 @@ SERVICE_TOKEN_FILENAME = Path("/var/run/secrets/kubernetes.io/serviceaccount/tok
 SERVICE_CERT_FILENAME = Path("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
 NAMESPACE_FILENAME = Path("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
 
+FINALIZER_NAME = "inferencedb.aporia.com/finalizer"
 
 @config_provider("kubernetes")
 class KubernetesConfigProvider(ConfigProvider):
@@ -96,7 +98,7 @@ class KubernetesConfigProvider(ConfigProvider):
                     "schema": item["spec"].get("schema"),
                     "filters": item["spec"].get("filters"),
                     "destination": item["spec"]["destination"],
-                } for item in k8s_inference_loggers],
+                } for item in k8s_inference_loggers if item["metadata"].get("deletionTimestamp") is not None],
             }
         except KeyError:
             logging.error("Invalid configuration format.", exc_info=True)
@@ -130,3 +132,79 @@ class KubernetesConfigProvider(ConfigProvider):
             raise RuntimeError("Invalid K8s API response (couldn't find 'items' in JSON)")
 
         return response_content["items"]
+
+
+    async def manage_finalizers(self, finalizer: Callable[[dict], Awaitable[None]]):
+        async with aiohttp.ClientSession(**self._session_config) as session:
+            try:
+                k8s_inference_loggers = await self._get_k8s_resources(session, "inferenceloggers")
+            except RuntimeError:
+                logging.error("Fetching K8s resources failed.", exc_info=True)
+                return None
+            
+            for inference_logger in k8s_inference_loggers:
+                metadata = inference_logger["metadata"]
+                finalizers = metadata.get("finalizers", [])
+
+                # If this resource doesn't have a finalizer and it wasn't marked for deletion,
+                # add a finalizer.
+                if FINALIZER_NAME not in finalizers and metadata.get("deletionTimestamp") is None:
+                    await self._patch_finalizers(
+                        session=session,
+                        kind_plural="inferenceloggers",
+                        name=metadata["name"],
+                        namespace=metadata["namespace"],
+                        finalizers=[*finalizers, FINALIZER_NAME],
+                    )
+
+                # If this resource has a finalizer and it _was_ marked for deletion, call the user-provided 
+                # finalizer function and remove the K8s finalizer from the resource, so K8s can actually delete it.
+                elif FINALIZER_NAME in finalizers and metadata.get("deletionTimestamp") is not None:
+                    await finalizer(inference_logger)
+
+                    # Remove K8s finalizer.
+                    await self._patch_finalizers(
+                        session=session,
+                        kind_plural="inferenceloggers",
+                        name=metadata["name"],
+                        namespace=metadata["namespace"],
+                        finalizers=[item for item in finalizers if item != FINALIZER_NAME]
+                    )
+
+    async def _patch_finalizers(self, 
+        session: aiohttp.ClientSession,
+        kind_plural: str,
+        name: str,
+        namespace: str,
+        finalizers: List[str]
+    ):
+        patch = [{
+            "op": "add",
+            "path": "/metadata/finalizers",
+            "value": finalizers,
+        }]
+
+        # Build resource URL
+        url_components = [self._url_prefix]
+
+        if not self._is_namespaced:
+            url_components = [*url_components, "namespaces", namespace]
+        elif self._namespace != namespace:
+            raise RuntimeError("Cannot patch finalizers for a resource in a different namespace when in namespaced mode.")
+            
+        url_components = [*url_components, kind_plural, name]
+        
+        # Patch!
+        async with session.patch(
+            url="/".join(url_components), 
+            json=patch,
+            headers={"content-type": "application/json-patch+json"}
+        ) as response:
+            # All 2XX status codes (OK, CREATED, etc.) are considered success responses.
+            # 3XX status codes are considered failures because we don't really handle redirects,
+            # proxies, etc. All other statuses are obviously errors.
+            if response.status < 200 or response.status >= 300:
+                # This always raises an exception
+                raise RuntimeError(
+                    f"Failed to patch K8s {kind_plural} resources (HTTP status: {response.status})"
+                )
