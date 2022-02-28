@@ -1,3 +1,4 @@
+import logging
 import faust
 from inferencedb.config.component import ComponentConfig
 
@@ -8,6 +9,8 @@ from inferencedb.event_processors.factory import create_event_processor
 from inferencedb.event_processors.kserve_event_processor import KServeEventProcessor
 from inferencedb.schema_providers.factory import create_schema_provider
 from inferencedb.schema_providers.avro_schema_provider import AvroSchemaProvider
+from inferencedb.destinations.factory import create_destination
+from inferencedb.destinations.confluent_s3_destination import ConfluentS3Destination
 
 DEFAULT_SCHEMA_PROVIDER_CONFIG = ComponentConfig(type="avro", config={})
 
@@ -23,10 +26,10 @@ class InferenceLogger:
         self._config = config
         self._schema_registry = schema_registry
 
-        # TODO: Comment
+        # Create the target topic
         self._target_topic = app.topic(config.name)
 
-        # TODO: Comment
+        # Create schema provider
         schema_provider_config = config.schema_provider
         if schema_provider_config is None:
             schema_provider_config = DEFAULT_SCHEMA_PROVIDER_CONFIG
@@ -38,7 +41,7 @@ class InferenceLogger:
             "config": schema_provider_config.config,
         })
 
-        # TODO: Comment
+        # Create event processor
         self._source_topic = app.topic(self._config.topic)
         self._event_processor = create_event_processor(config.event_processor.type, {
             "logger_name": config.name,
@@ -46,38 +49,18 @@ class InferenceLogger:
             "config": config.event_processor.config,
         })
         
-
-        # TODO: Destination
-        # TODO: Delete this when the CRD is deleted - can prefix with "__inferencedb" and GET /connectors to see all existing
-        # TODO: Add timestamp field
-        # POST http://localhost:8083/connectors
-        # {
-        # 	"name": "my-model-sink",
-        # 	"config": {
-        # 		"connector.class": "io.confluent.connect.s3.S3SinkConnector",
-        # 		"storage.class": "io.confluent.connect.s3.storage.S3Storage",
-        # 		"s3.region": "us-east-2",
-        # 		"s3.bucket.name": "aporia-data",
-        # 		"topics.dir": "my-model-test-2",
-        # 		"flush.size": "2",
-        # 		"rotate.schedule.interval.ms": "20000",
-        # 		"auto.register.schemas": "false",
-        # 		"tasks.max": "1",
-        # 		"s3.part.size": "5242880",
-        # 		"timezone": "UTC",
-        # 		"parquet.codec": "snappy",
-        # 		"topics": "my_avro_topic",
-        # 		"schema.registry.url": "http://kafka-cp-schema-registry:8081",
-        # 		"s3.credentials.provider.class": "com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
-        # 		"format.class": "io.confluent.connect.s3.format.parquet.ParquetFormat",
-        # 		"value.converter": "io.confluent.connect.avro.AvroConverter",
-        # 		"key.converter": "org.apache.kafka.connect.storage.StringConverter",
-        # 		"value.converter.schema.registry.url": "http://kafka-cp-schema-registry:8081"
-        # 	}
-        # }
+        # Create destination
+        self._destination = create_destination(config.destination.type, {
+            "logger_name": config.name,
+            "topic": self._target_topic.get_topic_name(),
+            "config": config.destination.config,
+        })
 
     def register(self):
         async def agent(stream):
+            # Create the Kafka connector
+            await self._destination.create_connector()
+
             # Process every inference event
             async for event in stream.group_by(
                 name=self._config.name,

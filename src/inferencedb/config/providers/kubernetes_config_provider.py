@@ -98,7 +98,7 @@ class KubernetesConfigProvider(ConfigProvider):
                     "schema": item["spec"].get("schema"),
                     "filters": item["spec"].get("filters"),
                     "destination": item["spec"]["destination"],
-                } for item in k8s_inference_loggers if item["metadata"].get("deletionTimestamp") is not None],
+                } for item in k8s_inference_loggers if item["metadata"].get("deletionTimestamp") is None],
             }
         except KeyError:
             logging.error("Invalid configuration format.", exc_info=True)

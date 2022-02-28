@@ -73,6 +73,7 @@ class AvroSchemaProvider(SchemaProvider):
                 schema=self._schema,
                 record={
                     "id": f"{inference.id}_{i}",
+                    "occurred_at": inference.occurred_at.isoformat(),
                     **inputs.to_dict(),
                     **outputs.to_dict()
                 },
@@ -85,6 +86,7 @@ class AvroSchemaProvider(SchemaProvider):
             "name": self._logger_name.replace("-", "_"),
             "fields": [
                 {"name": "id", "type": "string"},
+                {"name": "occurred_at", "type": "string"},
                 *schema_infer(inference.inputs)["fields"],
                 *schema_infer(inference.outputs)["fields"],
             ],

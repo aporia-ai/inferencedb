@@ -1,8 +1,9 @@
 from typing import Any, Dict
 
 import faust
-from inferencedb.core.inference import Inference
+from dateutil.parser import isoparse
 
+from inferencedb.core.inference import Inference
 from inferencedb.registry.decorators import event_processor
 from inferencedb.utils.kserve_utils import parse_kserve_request, parse_kserve_response
 from .event_processor import EventProcessor
@@ -35,7 +36,7 @@ class KServeEventProcessor(EventProcessor):
         
         # Add data to event, depending on the event type.
         event_type = faust.current_event().headers.get("ce_type", "").decode("utf-8")
-
+        
         try:
             inference = Inference.deserialize(self._table[event_id].value())
         except KeyError:
@@ -51,6 +52,7 @@ class KServeEventProcessor(EventProcessor):
             inference.model_name = event.get("model_name")
             inference.model_version = event.get("model_version")
             inference.outputs = parse_kserve_response(event)
+            inference.occurred_at = isoparse(faust.current_event().headers.get("ce_time", "").decode("utf-8"))
         else:
             return
             

@@ -1,7 +1,7 @@
 apiVersion: inferencedb.aporia.com/v1alpha1
 kind: InferenceLogger
 metadata:
-  name: sklearn-mms-model1
+  name: sklearn-mms-model1xy
   namespace: default
 spec:
   topic: knative-broker-default-sklearn-mms-broker
@@ -18,14 +18,15 @@ spec:
     modelName: model1
     # modelVersion: v1
   destination:
-    type: s3-parquet
+    type: confluent-s3
     config:
-      url: s3://my-models-data/my-model.parquet
+      url: s3://aporia-data/inferencedb
+      format: parquet
 ---
 apiVersion: inferencedb.aporia.com/v1alpha1
 kind: InferenceLogger
 metadata:
-  name: sklearn-mms-model2
+  name: sklearn-mms-model2xy
   namespace: default
 spec:
   topic: knative-broker-default-sklearn-mms-broker
@@ -42,30 +43,7 @@ spec:
     modelName: model2
     # modelVersion: v2
   destination:
-    type: s3-parquet
+    type: confluent-s3
     config:
-      url: s3://my-models-data/my-model.parquet
----
-apiVersion: inferencedb.aporia.com/v1alpha1
-kind: InferenceLogger
-metadata:
-  name: sklearn-mms-model2-c
-  namespace: default
-spec:
-  topic: knative-broker-default-sklearn-mms-broker
-  schema:
-    type: avro
-    config:
-      columnNames:
-        inputs: [sepal_width, petal_width, sepal_length, petal_length]
-        outputs: [flower]
-  events:
-    type: kserve
-    config: {}
-  filters:
-    modelName: model2
-    # modelVersion: v2
-  destination:
-    type: s3-parquet
-    config:
-      url: s3://my-models-data/my-model.parquet
+      url: s3://aporia-data/inferencedb
+      format: parquet
