@@ -1,5 +1,6 @@
 SHELL := /bin/bash
 
+HELM_CHART=./charts/inferencedb
 DEFAULT_VERSION=1.0.0
 
 install-deps:
