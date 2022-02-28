@@ -14,6 +14,9 @@
 * **Horizontally Scalable** - Add more workers to support more models & traffic 
 * **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformation using Numpy, Pandas, etc.
 
+<p align="center">Made with :heart: by <a href="https://www.aporia.com?utm_source=github&utm_medium=github&utm_campaign=mlnotify" target="_blank">Aporia</a></p>
+
+
 ### Quickstart
 
 To install InferenceDB, run:
