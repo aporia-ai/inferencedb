@@ -12,7 +12,7 @@
 * **Model Serving Integrations** - Connect to existing model serving tools such as [KServe](https://kserve.github.io/website/), [Seldon Core](https://github.com/SeldonIO/seldon-core), and others
 * **Extensible** - Add your own model serving frameworks, database destinations
 * **Horizontally Scalable** - Add more workers to support more models & traffic 
-* **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformation using Numpy, Pandas, etc.
+* **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformations using Numpy, Pandas, etc.
 
 <p align="center">Made with :heart: by <a href="https://www.aporia.com?utm_source=github&utm_medium=github&utm_campaign=mlnotify" target="_blank">Aporia</a></p>
 
