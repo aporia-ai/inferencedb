@@ -1,6 +1,10 @@
-<p align="center"><img src="docs/logo.svg" width="450" /></p>
+<p align="center">
+    <img src="docs/logo.svg" width="450" />
+    
+</p>
+<p align="center"><b>Stream ML model inputs and outputs to any data storage</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
 
-Stream ML model inputs and outputs to any data storage, based on [Apache Kafka](https://kafka.apache.org/).
+---
 
 ### Features
 
