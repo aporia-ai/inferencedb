@@ -14,7 +14,7 @@ install-deps:
 	@echo [!] Installing skaffold
 	@curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && sudo install skaffold /usr/local/bin/
 
-build: docker-login
+build:
 	skaffold build --tag=ng-$(NEW_VERSION)
 
 bump-version:
