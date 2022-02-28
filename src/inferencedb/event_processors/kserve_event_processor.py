@@ -48,6 +48,8 @@ class KServeEventProcessor(EventProcessor):
                 return
 
             inference.id = event["id"]
+            inference.model_name = event.get("model_name")
+            inference.model_version = event.get("model_version")
             inference.outputs = parse_kserve_response(event)
         else:
             return

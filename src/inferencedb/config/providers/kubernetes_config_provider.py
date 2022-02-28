@@ -94,6 +94,7 @@ class KubernetesConfigProvider(ConfigProvider):
                     "topic": item["spec"]["topic"],
                     "events": item["spec"]["events"],
                     "schema": item["spec"].get("schema"),
+                    "filters": item["spec"].get("filters"),
                     "destination": item["spec"]["destination"],
                 } for item in k8s_inference_loggers],
             }

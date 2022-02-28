@@ -87,6 +87,16 @@ class InferenceLogger:
                 if inference is None:
                     continue
 
+                # Apply filters.
+                # FUTURE: Do this in a more generic way.
+                filters = self._config.filters
+                if filters is not None:
+                    if filters.get("modelName") is not None and filters["modelName"] != inference.model_name:
+                        continue
+
+                    if filters.get("modelVersion") is not None and filters["modelVersion"] != inference.model_name:
+                        continue
+
                 # Serialize each inference
                 async for item in self._schema_provider.serialize(inference):
                     yield item

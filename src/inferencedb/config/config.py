@@ -19,6 +19,7 @@ class InferenceLoggerConfig(BaseModel):
     topic: str
     event_processor: ComponentConfig = Field(None, alias="events")
     schema_provider: Optional[ComponentConfig] = Field(None, alias="schema")
+    filters: Optional[Dict[str, str]]
     destination: ComponentConfig
 
 
