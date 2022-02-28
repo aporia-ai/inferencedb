@@ -15,11 +15,11 @@ install-deps:
 	@curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && sudo install skaffold /usr/local/bin/
 
 build:
-	skaffold build --tag=ng-$(NEW_VERSION)
+	skaffold build --tag=$(NEW_VERSION)
 
 bump-version:
 	$(eval CURRENT_VERSION=$(shell git for-each-ref --sort=-v:refname --count=1 refs/tags/[0-9]*.[0-9]*.[0-9]* refs/tags/v[0-9]*.[0-9]*.[0-9]* | cut -d / -f 3-))
-	$(eval export NEW_VERSION=v$(shell \
+	$(eval export NEW_VERSION=$(shell \
 		if [ -z $(CURRENT_VERSION) ]; then \
 			echo $(DEFAULT_VERSION); \
 		else \
@@ -38,7 +38,7 @@ bump-version:
 
 	git commit -F /tmp/commit-message --amend --no-edit
 
-	git tag -a -m "Version $(NEW_VERSION)" $(NEW_VERSION)
+	git tag -a -m "Version v$(NEW_VERSION)" v$(NEW_VERSION)
 
 	@BRANCH_PROTECTION=`curl https://api.github.com/repos/$(GITHUB_REPOSITORY)/branches/main/protection \
 		-H "Authorization: token $(CAMPARIBOT_TOKEN)" -H "Accept:application/vnd.github.luke-cage-preview+json" -X GET -s`; \
