@@ -1,6 +1,8 @@
-<p align="left"><img src="docs/logo.svg" width="450" /></p>
+<p align="center"><img src="docs/logo.svg" width="450" /></p>
 
 InferenceDB is a Cloud Native service to **stream ML Model inputs and outputs to any database**, based on [Apache Kafka](https://kafka.apache.org/).
+
+---
 
 ### Features
 
