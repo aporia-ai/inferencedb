@@ -1,9 +1,10 @@
 apiVersion: inferencedb.aporia.com/v1alpha1
 kind: InferenceLogger
 metadata:
-  name: sklearn-mms-model1xy
+  name: sklearn-mms-model-1
   namespace: default
 spec:
+  # NOTE: The format is knative-broker-<namespace>-<brokerName>
   topic: knative-broker-default-sklearn-mms-broker
   schema:
     type: avro
@@ -26,9 +27,10 @@ spec:
 apiVersion: inferencedb.aporia.com/v1alpha1
 kind: InferenceLogger
 metadata:
-  name: sklearn-mms-model2xy
+  name: sklearn-mms-model-2
   namespace: default
 spec:
+  # NOTE: The format is knative-broker-<namespace>-<brokerName>
   topic: knative-broker-default-sklearn-mms-broker
   schema:
     type: avro

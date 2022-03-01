@@ -1,3 +1,0 @@
-lightgbm
-pandas
-numpy

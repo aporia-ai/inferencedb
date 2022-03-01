@@ -1,0 +1,24 @@
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: sklearn-iris
+  namespace: default
+spec:
+  # NOTE: The format is knative-broker-<namespace>-<brokerName>
+  topic: knative-broker-default-sklearn-iris-broker
+  events:
+    type: kserve
+    config: {}
+  destination:
+    type: confluent-s3
+    config:
+      url: s3://aporia-data/inferencedb
+      format: parquet
+
+  # Optional - Only if you want to override column names
+  schema:
+    type: avro
+    config:
+      columnNames:
+        inputs: [sepal_width, petal_width, sepal_length, petal_length]
+        outputs: [flower]

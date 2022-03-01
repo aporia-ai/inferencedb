@@ -1,8 +1,0 @@
-{
-    "name": "my-model",
-    "implementation": "serve.MyModelRuntime",
-    "parameters": {
-        "version": "v0.1.0",
-        "content_type": "pd"
-    }
-}
