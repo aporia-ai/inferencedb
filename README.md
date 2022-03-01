@@ -10,7 +10,7 @@ InferenceDB makes it easy to log ML model inferences (inputs & outputs) to AWS S
 
 ### Quickstart
 
-* [KServe]() 
+* [KServe](https://github.com/aporia-ai/inferencedb/wiki/KServe-Quickstart) 
 * [Seldon Core]()
 * [FastAPI]()
 
@@ -65,7 +65,7 @@ spec:
       awsRegion: us-east-2
 ```
 
-This InferenceLogger will watch the `my-model` Kafka topic for events in KServe format, and log them to a Parquet file on S3. See the [KServe quickstart guide]() for more details.
+This InferenceLogger will watch the `my-model` Kafka topic for events in KServe format, and log them to a Parquet file on S3. See the [KServe quickstart guide](https://github.com/aporia-ai/inferencedb/wiki/KServe-Quickstart) for more details.
 
 ## Development
 
