@@ -31,7 +31,7 @@ InferenceDB makes it easy to log ML model inferences (inputs & outputs) to any d
 
 The only requirement to InferenceDB is a Kafka cluster, with [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html) and [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html).
 
-To install InferenceDB using the [Helm package manager](https://helm.sh/), run:
+To install InferenceDB using Helm, run:
 
     helm install inferencedb inferencedb/inferencedb -n inferencedb --create-namespace \
       --set kafka.broker=kafka://kafka:9092 \
