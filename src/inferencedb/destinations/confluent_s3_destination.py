@@ -34,14 +34,14 @@ class ConfluentS3Destination(Destination):
         connector_config =  {
             "connector.class": "io.confluent.connect.s3.S3SinkConnector",
             "storage.class": "io.confluent.connect.s3.storage.S3Storage",
-            "s3.region": "us-east-2",                   # TODO
+            "s3.region": self._config["awsRegion"],
             "s3.bucket.name": url.netloc,
             "topics.dir": url.path.strip("/"),
-            "flush.size": "2",                          # TODO
-            "rotate.schedule.interval.ms": "20000",     # TODO
+            "flush.size": "2",
+            "rotate.schedule.interval.ms": "20000",
             "auto.register.schemas": "false",
-            "tasks.max": "1",                           # TODO
-            "s3.part.size": "5242880",                  # TODO
+            "tasks.max": "1",
+            "s3.part.size": "5242880",
             "timezone": "UTC",
             "parquet.codec": "snappy",
             "topics": self._topic,
@@ -51,6 +51,7 @@ class ConfluentS3Destination(Destination):
             "key.converter": "org.apache.kafka.connect.storage.StringConverter",
             "schema.registry.url": settings.kafka_schema_registry_url,
             "value.converter.schema.registry.url": settings.kafka_schema_registry_url,
+            **self._config.get("connector", {})
         }
 
         async with aiohttp.ClientSession(settings.kafka_connect_url) as session:

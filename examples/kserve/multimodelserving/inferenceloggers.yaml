@@ -23,6 +23,7 @@ spec:
     config:
       url: s3://aporia-data/inferencedb
       format: parquet
+      awsRegion: us-east-2
 ---
 apiVersion: inferencedb.aporia.com/v1alpha1
 kind: InferenceLogger
@@ -49,3 +50,4 @@ spec:
     config:
       url: s3://aporia-data/inferencedb
       format: parquet
+      awsRegion: us-east-2

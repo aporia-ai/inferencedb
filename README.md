@@ -62,6 +62,7 @@ spec:
     config:
       url: s3://my-bucket/inferencedb
       format: parquet
+      awsRegion: us-east-2
 ```
 
 This InferenceLogger will watch the `my-model` Kafka topic for events in KServe format, and log them to a Parquet file on S3. See the [KServe quickstart guide]() for more details.
