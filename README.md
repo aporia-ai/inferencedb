@@ -2,9 +2,11 @@
     <img src="docs/logo.svg" width="450" />
     
 </p>
-<p align="center"><b>Stream ML model inputs and outputs to any data storage</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
+<p align="center"><b>Stream ML model inferences to any data storage</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
 
 ---
+
+InferenceDB makes it easy to log ML model inferences (inputs & outputs) to any data storage such as AWS S3, Google Cloud Storage, Azure Blob Storage, and more. 
 
 ### Features
 
