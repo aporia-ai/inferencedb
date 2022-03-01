@@ -1,0 +1,21 @@
+apiVersion: serving.kserve.io/v1alpha1
+kind: TrainedModel
+metadata:
+  name: model1
+spec:
+  inferenceService: sklearn-mms
+  model:
+    storageUri: gs://seldon-models/sklearn/mms/lr_model
+    framework: sklearn
+    memory: 512Mi
+---
+apiVersion: serving.kserve.io/v1alpha1
+kind: TrainedModel
+metadata:
+  name: model2
+spec:
+  inferenceService: sklearn-mms
+  model:
+    storageUri: gs://seldon-models/sklearn/mms/lr_model
+    framework: sklearn
+    memory: 512Mi
