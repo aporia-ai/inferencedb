@@ -6,7 +6,7 @@
 
 ---
 
-InferenceDB makes it easy to log ML model inferences (inputs & outputs) to any data storage such as AWS S3, Google Cloud Storage, Azure Blob Storage, and others. 
+InferenceDB makes it easy to log ML model inferences (inputs & outputs) to AWS S3, Google Cloud Storage, Azure Blob Storage, and other data storages. 
 
 ### Quickstart
 
