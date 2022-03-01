@@ -1,0 +1,20 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: sklearn-mms
+spec:
+  predictor:
+    minReplicas: 1
+    logger:
+      mode: all
+      url: http://kafka-broker-ingress.knative-eventing.svc.cluster.local/default/sklearn-mms-broker
+    sklearn:
+      name: sklearn-mms
+      protocolVersion: v2
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
