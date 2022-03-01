@@ -41,7 +41,7 @@ To install InferenceDB using Helm, run:
 
 ## Usage
 
-To start using InferenceDB, create an **InferenceLogger** - a [Kubernetes Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) that is defined and controlled by InferenceDB.
+To start logging your model inferences, create an **InferenceLogger** Kubernetes resource. This is a [Kubernetes Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) that is defined and controlled by InferenceDB.
 
 Example:
 
@@ -61,7 +61,7 @@ Example:
           url: s3://my-bucket/inferencedb
           format: parquet
           
-This InferenceLogger will watch the `my-model` Kafka topic for events in KServe's format, and log them to a Parquet file on S3. See the [KServe quickstart guide]() for more details.
+This InferenceLogger will watch the `my-model` Kafka topic for events in KServe format, and log them to a Parquet file on S3. See the [KServe quickstart guide]() for more details.
 
 ## Development
 
