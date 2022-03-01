@@ -8,6 +8,13 @@
 
 InferenceDB makes it easy to log ML model inferences (inputs & outputs) to any data storage such as AWS S3, Google Cloud Storage, Azure Blob Storage, and others. 
 
+### Quickstart
+
+* [KServe]() 
+* [Seldon Core]()
+* [FastAPI]()
+
+
 ### Features
 
 * **Cloud Native** - Runs on top of Kubernetes and supports any cloud infrastructure
@@ -16,13 +23,6 @@ InferenceDB makes it easy to log ML model inferences (inputs & outputs) to any d
 * **Horizontally Scalable** - Add more workers to support more models and more traffic 
 * **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformations using Numpy, Pandas, etc.
 
-
-
-### Quickstart
-
-* [KServe]() 
-* [Seldon Core]()
-* [FastAPI]()
 
 <p align="center">Made with :heart: by <a href="https://www.aporia.com?utm_source=github&utm_medium=github&utm_campaign=inferencedb" target="_blank">Aporia</a></p>
 
@@ -43,7 +43,7 @@ To install InferenceDB using Helm, run:
 
 To start logging your model inferences, create an **InferenceLogger** Kubernetes resource. This is a [Kubernetes Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) that is defined and controlled by InferenceDB.
 
-Example:
+**Example:**
 
     apiVersion: inferencedb.aporia.com/v1alpha1
     kind: InferenceLogger
