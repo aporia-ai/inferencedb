@@ -41,7 +41,7 @@ To install InferenceDB using Helm, run:
 
 ## Usage
 
-To start using InferenceDB, create an **InferenceLogger** resource, which is a [custom resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) that is defined by InferenceDB.
+To start using InferenceDB, create an **InferenceLogger** - a [Kubernetes Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) that is defined and controlled by InferenceDB.
 
 Example:
 
