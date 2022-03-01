@@ -2,11 +2,11 @@
     <img src="logo.svg" width="450" />
     
 </p>
-<p align="center"><b>Stream ML model inferences to any data storage</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
+<p align="center"><b>🔥 Stream ML model inferences to any data storage</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
 
 ---
 
-InferenceDB makes it easy to log ML model inferences (inputs & outputs) to any data storage such as AWS S3, Google Cloud Storage, Azure Blob Storage, and others. 
+InferenceDB makes it easy to log ML model inferences (inputs & outputs) to AWS S3, Google Cloud Storage, Azure Blob Storage, and other data storages. 
 
 ### Quickstart
 
@@ -33,11 +33,12 @@ The only requirement to InferenceDB is a Kafka cluster, with [Schema Registry](h
 
 To install InferenceDB using Helm, run:
 
-    helm install inferencedb inferencedb/inferencedb -n inferencedb --create-namespace \
-      --set kafka.broker=kafka://kafka:9092 \
-      --set kafka.schemaRegistryUrl=http://schema-registry:8081 \
-      --set kafka.connectUrl=http://kafka-connect:8083
-
+```sh
+helm install inferencedb inferencedb/inferencedb -n inferencedb --create-namespace \
+  --set kafka.broker=kafka://kafka:9092 \
+  --set kafka.schemaRegistryUrl=http://schema-registry:8081 \
+  --set kafka.connectUrl=http://kafka-connect:8083
+```
 
 ## Usage
 
@@ -45,22 +46,24 @@ To start logging your model inferences, create an **InferenceLogger** Kubernetes
 
 **Example:**
 
-    apiVersion: inferencedb.aporia.com/v1alpha1
-    kind: InferenceLogger
-    metadata:
-      name: my-model-inference-logger
-      namespace: default
-    spec:
-      topic: my-model
-      events:
-        type: kserve
-        config: {}
-      destination:
-        type: confluent-s3
-        config:
-          url: s3://my-bucket/inferencedb
-          format: parquet
-          
+```yaml
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: my-model-inference-logger
+  namespace: default
+spec:
+  topic: my-model
+  events:
+    type: kserve
+    config: {}
+  destination:
+    type: confluent-s3
+    config:
+      url: s3://my-bucket/inferencedb
+      format: parquet
+```
+
 This InferenceLogger will watch the `my-model` Kafka topic for events in KServe format, and log them to a Parquet file on S3. See the [KServe quickstart guide]() for more details.
 
 ## Development
