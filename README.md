@@ -11,7 +11,7 @@ InferenceDB makes it easy to log ML model inferences (inputs & outputs) to any d
 ### Features
 
 * **Cloud Native** - Runs on top of Kubernetes and supports any cloud infrastructure
-* **Model Serving Integrations** - Connects to existing model serving tools such as [KServe](https://kserve.github.io/website/), [Seldon Core](https://github.com/SeldonIO/seldon-core), and others
+* **Model Serving Integrations** - Connects to existing model serving tools like [KServe](https://kserve.github.io/website/) and [Seldon Core](https://github.com/SeldonIO/seldon-core)
 * **Extensible** - Add your own model serving frameworks and database destinations
 * **Horizontally Scalable** - Add more workers to support more models and more traffic 
 * **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformations using Numpy, Pandas, etc.
