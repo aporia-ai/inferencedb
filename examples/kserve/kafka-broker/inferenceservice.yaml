@@ -1,0 +1,12 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: sklearn-iris
+spec:
+  predictor:
+    logger:
+      mode: all
+      url: http://kafka-broker-ingress.knative-eventing.svc.cluster.local/default/sklearn-iris-broker
+    sklearn:
+      protocolVersion: v2
+      storageUri: gs://seldon-models/sklearn/iris

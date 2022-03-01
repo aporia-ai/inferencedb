@@ -1,0 +1,53 @@
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: sklearn-mms-model-1
+  namespace: default
+spec:
+  # NOTE: The format is knative-broker-<namespace>-<brokerName>
+  topic: knative-broker-default-sklearn-mms-broker
+  schema:
+    type: avro
+    config:
+      columnNames:
+        inputs: [sepal_width, petal_width, sepal_length, petal_length]
+        outputs: [flower]
+  events:
+    type: kserve
+    config: {}
+  filters:
+    modelName: model1
+    # modelVersion: v1
+  destination:
+    type: confluent-s3
+    config:
+      url: s3://aporia-data/inferencedb
+      format: parquet
+      awsRegion: us-east-2
+---
+apiVersion: inferencedb.aporia.com/v1alpha1
+kind: InferenceLogger
+metadata:
+  name: sklearn-mms-model-2
+  namespace: default
+spec:
+  # NOTE: The format is knative-broker-<namespace>-<brokerName>
+  topic: knative-broker-default-sklearn-mms-broker
+  schema:
+    type: avro
+    config:
+      columnNames:
+        inputs: [sepal_width, petal_width, sepal_length, petal_length]
+        outputs: [flower]
+  events:
+    type: kserve
+    config: {}
+  filters:
+    modelName: model2
+    # modelVersion: v2
+  destination:
+    type: confluent-s3
+    config:
+      url: s3://aporia-data/inferencedb
+      format: parquet
+      awsRegion: us-east-2
