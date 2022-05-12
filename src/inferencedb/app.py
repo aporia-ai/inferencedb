@@ -5,6 +5,7 @@ from inferencedb.core.inference_logger import InferenceLogger
 import faust
 import json
 import os
+import ssl
 
 import aiohttp
 
@@ -15,12 +16,24 @@ from schema_registry.client import AsyncSchemaRegistryClient
 
 settings = Settings()
 
+# Load TLS certificates if necessary
+ssl_context = None
+if os.path.isdir("/etc/kafka-tls"):
+    ssl_context = ssl.create_default_context(
+        purpose=ssl.Purpose.SERVER_AUTH, 
+        cafile="/etc/kafka-tls/ca.crt",
+    )
+    ssl_context.load_cert_chain("/etc/kafka-tls/user.crt", keyfile="/etc/kafka-tls/user.key")
+
+
+# Create Faust app
 app = faust.App(
     id="inferencedb", 
     broker=settings.kafka_broker, 
     store="rocksdb://",
     autodiscover=True,
-    origin="inferencedb"
+    origin="inferencedb",
+    broker_credentials=ssl_context,
 )
 
 

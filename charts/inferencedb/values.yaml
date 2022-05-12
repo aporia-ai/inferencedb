@@ -76,6 +76,13 @@ serviceMonitor:
 
 logLevel: WARNING
 
+kafka:
+  broker:
+  schemaRegistryUrl:
+  connectUrl:
+  tls:
+    secretName:
+
 configProvider:
   type: kubernetes
   args:
