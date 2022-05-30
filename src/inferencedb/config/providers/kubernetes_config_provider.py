@@ -50,7 +50,7 @@ class KubernetesConfigProvider(ConfigProvider):
 
         # The KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT environment variables are automatically
         # defined by Kubernetes to enable pods to easily access the Kubernetes API.
-        host = os.environ["KUBERNETES_SERVICE_HOST"]
+        host = "kubernetes.default.svc.cluster.local" # os.environ["KUBERNETES_SERVICE_HOST"]
         port = os.environ["KUBERNETES_SERVICE_PORT"]
 
         # HTTP session configuration
