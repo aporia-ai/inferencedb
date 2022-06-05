@@ -2,21 +2,17 @@ import logging
 import logging.config
 
 
-def generate_logging_config(log_level: str, enable_rich_logs: bool = False) -> dict:
+def generate_logging_config(log_level: str) -> dict:
     """Generates logging config.
 
     Args:
         log_level: Log level
-        enable_rich_logs: True to enable "rich" logs (using the rich library). False to
-            use the default json logs.
 
     Returns:
         log config dict.
     """
     log_level = log_level.upper()
     log_handler = "simple"
-    if enable_rich_logs:
-        log_handler = "rich"
 
     logger_config = {
         "level": log_level,
@@ -30,10 +26,6 @@ def generate_logging_config(log_level: str, enable_rich_logs: bool = False) -> d
                 "class": "logging.StreamHandler",
                 "formatter": "json",
                 "stream": "ext://sys.stdout",
-            },
-            "rich": {
-                "class": "rich.logging.RichHandler",
-                "rich_tracebacks": True,
             },
         },
         "formatters": {
@@ -53,13 +45,11 @@ def generate_logging_config(log_level: str, enable_rich_logs: bool = False) -> d
     return logging_config
 
 
-def init_logging(log_level: str, enable_rich_logs: bool = False):
+def init_logging(log_level: str):
     """Configures the logger.
 
     Args:
         log_level: Log level
-        enable_rich_logs: True to enable "rich" logs (using the rich library). False to
-            use the default json logs.
     """
-    logging_config = generate_logging_config(log_level=log_level, enable_rich_logs=enable_rich_logs)
+    logging_config = generate_logging_config(log_level=log_level)
     logging.config.dictConfig(logging_config)

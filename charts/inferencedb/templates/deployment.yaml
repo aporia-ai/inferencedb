@@ -51,7 +51,7 @@ spec:
               value: {{ .Values.configProvider.args | toJson | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- if ne .Values.kafka.tls.secretName "" }}
+      {{- if .Values.kafka.tls.secretName }}
           volumeMounts:
           - name: kafka-tls
             mountPath: /etc/kafka-tls
