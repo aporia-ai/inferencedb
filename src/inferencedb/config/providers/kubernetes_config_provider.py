@@ -17,6 +17,8 @@ NAMESPACE_FILENAME = Path("/var/run/secrets/kubernetes.io/serviceaccount/namespa
 
 FINALIZER_NAME = "inferencedb.aporia.com/finalizer"
 
+DEFAULT_HTTP_TIMEOUT_SEC = 5
+
 @config_provider("kubernetes")
 class KubernetesConfigProvider(ConfigProvider):
     """Kubernetes config provider."""
@@ -58,6 +60,7 @@ class KubernetesConfigProvider(ConfigProvider):
             "base_url": f"https://{host}:{port}",
             "headers": {"Authorization": f"Bearer {token}"},
             "connector": connector,
+            "timeout": aiohttp.ClientTimeout(total=DEFAULT_HTTP_TIMEOUT_SEC)
         }
 
     async def run(self):

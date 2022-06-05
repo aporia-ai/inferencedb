@@ -1,17 +1,21 @@
 import asyncio
-from asyncio.subprocess import PIPE, STDOUT
 import json
 import os
+import logging
 from signal import SIGTERM
 
 from inferencedb.config.factory import create_config_provider
 from inferencedb.config.providers.kubernetes_config_provider import KubernetesConfigProvider
 from inferencedb.utils.asyncio_utils import cancling_background_task
 from inferencedb.settings import Settings
+from inferencedb.core.logging_utils import init_logging
 
 
 async def main():
     settings = Settings()
+    init_logging(settings.log_level)
+
+    logging.info("Initialized InferenceDB.")
 
     config_provider = create_config_provider(
         name=settings.config_provider,
@@ -28,6 +32,8 @@ async def main():
             # Create the worker process.
             process = await asyncio.create_subprocess_exec(
                 "faust", "-A", "inferencedb.app", "worker", "-l", "info",
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
                 env={
                     **os.environ, 
                     "CONFIG": json.dumps(config)

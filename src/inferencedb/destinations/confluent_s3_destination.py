@@ -18,6 +18,8 @@ CONFLUENT_KAFKA_CONNECT_FORMATS = {
     "parquet": "io.confluent.connect.s3.format.parquet.ParquetFormat",
 }
 
+DEFAULT_HTTP_TIMEOUT_SEC = 5
+
 
 @destination("confluent-s3")
 class ConfluentS3Destination(Destination):
@@ -54,7 +56,10 @@ class ConfluentS3Destination(Destination):
             **self._config.get("connector", {})
         }
 
-        async with aiohttp.ClientSession(settings.kafka_connect_url) as session:
+        async with aiohttp.ClientSession(
+            base_url=settings.kafka_connect_url,
+            timeout=aiohttp.ClientTimeout(total=DEFAULT_HTTP_TIMEOUT_SEC),
+        ) as session:
             await self._upsert_connector(session, connector_name, connector_config)
 
     async def _upsert_connector(self, session: aiohttp.ClientSession, connector_name: str, connector_config: dict):

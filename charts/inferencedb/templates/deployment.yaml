@@ -49,13 +49,13 @@ spec:
               value: {{ .Values.configProvider.type | quote }}
             - name: INFERENCEDB_CONFIG_PROVIDER_ARGS
               value: {{ .Values.configProvider.args | toJson | quote }}
-        resources:
-          {{- toYaml .Values.resources | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
       {{- if ne .Values.kafka.tls.secretName "" }}
-        volumeMounts:
-        - name: kafka-tls
-          mountPath: /etc/kafka-tls
-          readOnly: true
+          volumeMounts:
+          - name: kafka-tls
+            mountPath: /etc/kafka-tls
+            readOnly: true
       volumes:
       - name: kafka-tls
         secret:

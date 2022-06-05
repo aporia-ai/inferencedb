@@ -2,6 +2,7 @@ import asyncio
 from inferencedb.config.factory import create_config_provider, generate_config_from_dict
 from inferencedb.config.providers.kubernetes_config_provider import KubernetesConfigProvider
 from inferencedb.core.inference_logger import InferenceLogger
+from inferencedb.core.logging_utils import generate_logging_config
 import faust
 import json
 import os
@@ -34,6 +35,7 @@ app = faust.App(
     autodiscover=True,
     origin="inferencedb",
     broker_credentials=ssl_context,
+    logging_config=generate_logging_config(log_level=settings.log_level)
 )
 
 
@@ -58,7 +60,10 @@ async def remove_old_inferenceloggers():
         connector_name = f"inferencedb-{logger_name}"
         
         for _ in range(10):
-            async with aiohttp.ClientSession(settings.kafka_connect_url) as session:
+            async with aiohttp.ClientSession(
+                base_url=settings.kafka_connect_url,
+                timeout=aiohttp.ClientTimeout(total=5),
+            ) as session:
                 async with session.delete(url=f"/connectors/{connector_name}") as response:
                     if response.status == 409:
                         # Kafka connect rebalance
