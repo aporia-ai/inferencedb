@@ -2,11 +2,12 @@ import asyncio
 from inferencedb.config.factory import create_config_provider, generate_config_from_dict
 from inferencedb.config.providers.kubernetes_config_provider import KubernetesConfigProvider
 from inferencedb.core.inference_logger import InferenceLogger
-from inferencedb.core.logging_utils import generate_logging_config
+from inferencedb.core.logging_utils import generate_logging_config, init_logging
 import faust
 import json
 import os
 import ssl
+import logging
 
 import aiohttp
 
@@ -16,6 +17,11 @@ from schema_registry.client import AsyncSchemaRegistryClient
 
 
 settings = Settings()
+
+# Initialize logging
+init_logging(log_level=settings.log_level)
+logging.info("Worker started.")
+
 
 # Load TLS certificates if necessary
 ssl_context = None
@@ -35,7 +41,10 @@ app = faust.App(
     autodiscover=True,
     origin="inferencedb",
     broker_credentials=ssl_context,
-    logging_config=generate_logging_config(log_level=settings.log_level)
+
+    # Faust's internal logging level is INFO because DEBUG is just unreadable.
+    # FUTURE: Maybe add here support for WARNING, ERROR, CRITICAL.
+    logging_config=generate_logging_config(log_level="INFO"),
 )
 
 

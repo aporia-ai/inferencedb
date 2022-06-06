@@ -2,11 +2,12 @@ import asyncio
 import json
 import os
 import logging
+import sys
 from signal import SIGTERM
 
 from inferencedb.config.factory import create_config_provider
 from inferencedb.config.providers.kubernetes_config_provider import KubernetesConfigProvider
-from inferencedb.utils.asyncio_utils import cancling_background_task
+from inferencedb.utils.asyncio_utils import cancling_background_task, read_stream
 from inferencedb.settings import Settings
 from inferencedb.core.logging_utils import init_logging
 
@@ -15,7 +16,7 @@ async def main():
     settings = Settings()
     init_logging(settings.log_level)
 
-    logging.info("Initialized InferenceDB.")
+    logging.info("InferenceDB started.")
 
     config_provider = create_config_provider(
         name=settings.config_provider,
@@ -23,13 +24,15 @@ async def main():
     )
 
     with cancling_background_task(config_provider.run()): 
-         # Wait for the first configuration.
+        # Wait for the first configuration.
+        logging.debug("Waiting for a configuration update.")
         await config_provider.wait_for_update() 
 
-        while True:        
+        while True:
             config = config_provider.get_config()
             
             # Create the worker process.
+            logging.debug("Configuration update received - running worker.")
             process = await asyncio.create_subprocess_exec(
                 "faust", "-A", "inferencedb.app", "worker", "-l", "info",
                 stdout=asyncio.subprocess.PIPE,
@@ -41,7 +44,11 @@ async def main():
             )
 
             # Wait for a configuration update and for the process to exit simultaneously.
-            wait_for_process_task = asyncio.create_task(process.communicate())
+            wait_for_process_task = asyncio.create_task(asyncio.wait([
+                read_stream(process.stdout, sys.stdout.buffer.write),
+                read_stream(process.stderr, sys.stderr.buffer.write)
+            ]))
+
             config_update_task = asyncio.create_task(config_provider.wait_for_update())
 
             done, pending = await asyncio.wait(

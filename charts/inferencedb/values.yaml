@@ -74,7 +74,7 @@ serviceMonitor:
   ## the ServiceMonitor web endpoint interval
   interval: "30s"
 
-logLevel: WARNING
+logLevel: INFO
 
 kafka:
   broker:
