@@ -51,6 +51,16 @@ spec:
               value: {{ .Values.configProvider.args | toJson | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.kafka.tls.secretName }}
+          volumeMounts:
+          - name: kafka-tls
+            mountPath: /etc/kafka-tls
+            readOnly: true
+      volumes:
+      - name: kafka-tls
+        secret:
+          secretName: {{ .Values.kafka.tls.secretName }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
