@@ -17,6 +17,8 @@ NAMESPACE_FILENAME = Path("/var/run/secrets/kubernetes.io/serviceaccount/namespa
 
 FINALIZER_NAME = "inferencedb.aporia.com/finalizer"
 
+DEFAULT_HTTP_TIMEOUT_SEC = 5
+
 @config_provider("kubernetes")
 class KubernetesConfigProvider(ConfigProvider):
     """Kubernetes config provider."""
@@ -50,7 +52,7 @@ class KubernetesConfigProvider(ConfigProvider):
 
         # The KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT environment variables are automatically
         # defined by Kubernetes to enable pods to easily access the Kubernetes API.
-        host = os.environ["KUBERNETES_SERVICE_HOST"]
+        host = "kubernetes.default.svc.cluster.local" # os.environ["KUBERNETES_SERVICE_HOST"]
         port = os.environ["KUBERNETES_SERVICE_PORT"]
 
         # HTTP session configuration
@@ -58,6 +60,7 @@ class KubernetesConfigProvider(ConfigProvider):
             "base_url": f"https://{host}:{port}",
             "headers": {"Authorization": f"Bearer {token}"},
             "connector": connector,
+            "timeout": aiohttp.ClientTimeout(total=DEFAULT_HTTP_TIMEOUT_SEC)
         }
 
     async def run(self):

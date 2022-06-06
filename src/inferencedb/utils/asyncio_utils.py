@@ -17,3 +17,11 @@ def cancling_background_task(coro: Coroutine) -> Generator[asyncio.Task, None, N
     yield task
     task.cancel()
 
+
+async def read_stream(stream, cb):  
+    while True:
+        line = await stream.readline()
+        if line:
+            cb(line)
+        else:
+            break

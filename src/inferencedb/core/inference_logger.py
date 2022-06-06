@@ -59,6 +59,7 @@ class InferenceLogger:
     def register(self):
         async def agent(stream):
             # Create the Kafka connector
+            logging.debug("Creating Kafka connector")
             await self._destination.create_connector()
 
             # Process every inference event
@@ -84,6 +85,7 @@ class InferenceLogger:
                 async for item in self._schema_provider.serialize(inference):
                     yield item
 
+        logging.debug("Starting agent")
         self._app.agent(
             name=self._config.name,
             channel=self._source_topic,
