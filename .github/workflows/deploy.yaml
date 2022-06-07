@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - kubernetes-api-url
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
