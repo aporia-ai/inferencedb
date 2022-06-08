@@ -1,11 +1,12 @@
 <p align="center">
     <img src="logo.svg" width="400" />
 </p>
-<p align="center"><b>Stream ML model inferences to any data lake</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
 
 ---
 
-InferenceDB makes it easy to log the features and predictions of real-time ML models in production to external data lakes. 
+InferenceDB makes it easy to store the features and predictions of real-time ML models in production on external data lakes. 
+
+This data can later be used for retraining, data drift monitoring, incident investigation and more.
 
 ### Quickstart
 
@@ -80,7 +81,7 @@ This will build the Docker image, push it to the Docker registry you provided, a
 
 ### Core
 
-* [ ] Add support for Spark Streaming in addition to of Faust
+* [ ] Add support for Spark Streaming in addition to Faust
 
 ### Event Processors 
 
