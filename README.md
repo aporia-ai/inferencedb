@@ -23,10 +23,9 @@ This data is important for retraining purposes, data drift monitoring, performan
 * **Horizontally Scalable** - Add more workers to support more models and more traffic 
 * **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformations using Numpy, Pandas, etc.
 
-**WARNING:** InferenceDB is still experimental, use at your own risk! 💀
-
 <p align="center">Made with :heart: by <a href="https://www.aporia.com?utm_source=github&utm_medium=github&utm_campaign=inferencedb" target="_blank">Aporia</a></p>
 
+**WARNING:** InferenceDB is still experimental, use at your own risk! 💀
 
 ## Installation
 
