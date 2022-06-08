@@ -80,6 +80,7 @@ This will build the Docker image, push it to the Docker registry you provided, a
 ### Core
 
 * [ ] Add support for Spark Streaming in addition to Faust
+* [ ] Add more input validations on the Kafka URLs
 
 ### Event Processors 
 
@@ -91,7 +92,8 @@ This will build the Docker image, push it to the Docker registry you provided, a
 
 ### Destinations
 
-* [x] Parquet on Amazon S3
+* [x] Parquet on S3
+* [ ] HDF5 on S3
 * [ ] Azure Blob Storage
 * [ ] Google Cloud Storage
 * [ ] ADLS Gen2
@@ -100,3 +102,8 @@ This will build the Docker image, push it to the Docker registry you provided, a
 * [ ] PostgreSQL
 * [ ] Snowflake
 * [ ] Iceberg
+
+### Documentation
+
+* [ ] How to set up Kafka using AWS / Azure / GCP managed services
+* [ ] API Reference for the CRDs
