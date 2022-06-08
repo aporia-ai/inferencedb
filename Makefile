@@ -28,7 +28,6 @@ bump-version:
 	))
 
 	@git log -1 --pretty="%B" > /tmp/commit-message
-	@sed -i '1s/^/\[$(NEW_VERSION)] /' /tmp/commit-message
 
 	@echo [!] Bumping version from $(CURRENT_VERSION) to $(NEW_VERSION)
 

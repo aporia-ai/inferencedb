@@ -1,28 +1,25 @@
 <p align="center">
-    <img src="logo.svg" width="450" />
-    
+    <img src="logo.svg" width="300" />
 </p>
-<p align="center"><b>🔥 Stream ML model inferences to any data storage</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
+<p align="center"><b>Stream ML model inferences to any data lake</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
 
 ---
 
-InferenceDB makes it easy to log ML model inferences (inputs & outputs) to AWS S3, Google Cloud Storage, Azure Blob Storage, and other data storages. 
+InferenceDB makes it easy to log the features and predictions of real-time ML models in production to external data lakes. 
 
 ### Quickstart
 
+* [FastAPI](https://github.com/aporia-ai/inferencedb/wiki/FastAPI-Quickstart) 
 * [KServe](https://github.com/aporia-ai/inferencedb/wiki/KServe-Quickstart) 
-* [Seldon Core]()
-* [FastAPI]()
 
 
 ### Features
 
 * **Cloud Native** - Runs on top of Kubernetes and supports any cloud infrastructure
-* **Model Serving Integrations** - Connects to existing model serving tools like [KServe](https://kserve.github.io/website/) and [Seldon Core](https://github.com/SeldonIO/seldon-core)
+* **Model Serving Integrations** - Connects to existing model serving tools like [KServe](https://kserve.github.io/website/)
 * **Extensible** - Add your own model serving frameworks and database destinations
 * **Horizontally Scalable** - Add more workers to support more models and more traffic 
 * **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformations using Numpy, Pandas, etc.
-
 
 <p align="center">Made with :heart: by <a href="https://www.aporia.com?utm_source=github&utm_medium=github&utm_campaign=inferencedb" target="_blank">Aporia</a></p>
 
@@ -35,7 +32,7 @@ To install InferenceDB using Helm, run:
 
 ```sh
 helm install inferencedb inferencedb/inferencedb -n inferencedb --create-namespace \
-  --set kafka.broker=kafka://kafka:9092 \
+  --set kafka.broker=kafka:9092 \
   --set kafka.schemaRegistryUrl=http://schema-registry:8081 \
   --set kafka.connectUrl=http://kafka-connect:8083
 ```
@@ -78,3 +75,29 @@ To start development, run:
     skaffold dev --trigger=manual
     
 This will build the Docker image, push it to the Docker registry you provided, and install the Helm chart on the cluster. Now, you can make changes to the code, click "Enter" on the Skaffold CLI and that would update the cluster.
+
+## Roadmap
+
+### Core
+
+* [ ] Add support for Spark Streaming in addition to of Faust
+
+### Event Processors 
+
+* [x] JSON
+* [x] KServe
+* [ ] Seldon Core
+* [ ] BentoML
+* [ ] MLFlow Deployments
+
+### Destinations
+
+* [x] Parquet on Amazon S3
+* [ ] Azure Blob Storage
+* [ ] Google Cloud Storage
+* [ ] ADLS Gen2
+* [ ] AWS Glue
+* [ ] Delta Lake
+* [ ] PostgreSQL
+* [ ] Snowflake
+* [ ] Iceberg
