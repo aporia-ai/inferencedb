@@ -6,7 +6,7 @@
 
 **InferenceDB** makes it easy to stream features and predictions of real-time ML models in production to a data lake.
 
-This data is important for retraining purposes, data drift monitoring, detecting performance degradation, AI incident investigation and more.
+This data is important for retraining purposes, data drift monitoring, performance degradation detection, AI incident investigation and more.
 
 ### Quickstart
 
