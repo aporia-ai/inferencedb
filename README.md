@@ -4,7 +4,7 @@
 
 ---
 
-InferenceDB makes it easy to store the features and predictions of real-time ML models in production on external data lakes. 
+**InferenceDB** makes it easy to store the features and predictions of real-time ML models in production on external data lakes. 
 
 This data can later be used for retraining, data drift monitoring, incident investigation and more.
 
