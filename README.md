@@ -4,9 +4,9 @@
 
 ---
 
-**InferenceDB** makes it easy to store the features and predictions of real-time production ML models on external data lakes.
+**InferenceDB** makes it easy to stream features and predictions of real-time ML models in production to a data lake.
 
-This data is important for retraining, data drift monitoring, calculating performance metrics in production, AI incident investigation and auditing purposes.
+This data is important for retraining purposes, data drift monitoring, detecting performance degradation, AI incident investigation and more.
 
 ### Quickstart
 
@@ -21,6 +21,8 @@ This data is important for retraining, data drift monitoring, calculating perfor
 * **Extensible** - Add your own model serving frameworks and database destinations
 * **Horizontally Scalable** - Add more workers to support more models and more traffic 
 * **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformations using Numpy, Pandas, etc.
+
+**WARNING:** InferenceDB is still experimental, use at your own risk! 💀
 
 <p align="center">Made with :heart: by <a href="https://www.aporia.com?utm_source=github&utm_medium=github&utm_campaign=inferencedb" target="_blank">Aporia</a></p>
 

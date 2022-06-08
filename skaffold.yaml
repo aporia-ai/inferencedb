@@ -16,7 +16,7 @@ deploy:
           image:
             pullPolicy: IfNotPresent
           devMode: true
-          logLevel: WARNING
+          logLevel: DEBUG
           kafka:
             broker: kafka://kafka-cp-kafka:9092
             schemaRegistryUrl: http://kafka-cp-schema-registry:8081

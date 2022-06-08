@@ -7,6 +7,7 @@ from schema_registry.client import AsyncSchemaRegistryClient
 from inferencedb.config.config import InferenceLoggerConfig
 from inferencedb.event_processors.factory import create_event_processor
 from inferencedb.event_processors.kserve_event_processor import KServeEventProcessor
+from inferencedb.event_processors.json_event_processor import JSONEventProcessor
 from inferencedb.schema_providers.factory import create_schema_provider
 from inferencedb.schema_providers.avro_schema_provider import AvroSchemaProvider
 from inferencedb.destinations.factory import create_destination
@@ -63,10 +64,13 @@ class InferenceLogger:
             await self._destination.create_connector()
 
             # Process every inference event
-            async for event in stream.group_by(
-                name=self._config.name,
-                key=self._event_processor.get_group_key,
-            ):
+            if hasattr(self._event_processor, "get_group_key"):
+                stream = stream.group_by(
+                    name=self._config.name,
+                    key=self._event_processor.get_group_key,
+                )
+
+            async for event in stream:
                 inference = await self._event_processor.process_event(event)
                 if inference is None:
                     continue

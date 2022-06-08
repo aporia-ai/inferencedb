@@ -50,7 +50,7 @@ class AvroSchemaProvider(SchemaProvider):
             inference.inputs.columns = self._input_column_names
         elif (
             isinstance(inference.inputs.columns, pd.RangeIndex) or
-            inference.inputs.columns == [str(i) for i in range(len(inference.inputs.columns))]
+            list(inference.inputs.columns) == [str(i) for i in range(len(inference.inputs.columns))]
         ):
             inference.inputs.columns = [f"X{i}" for i in range(len(inference.inputs.columns))]
         
@@ -59,7 +59,7 @@ class AvroSchemaProvider(SchemaProvider):
             inference.outputs.columns = self._output_column_names
         elif (
             isinstance(inference.outputs.columns, pd.RangeIndex) or
-            inference.outputs.columns == [str(i) for i in range(len(inference.outputs.columns))]
+            list(inference.outputs.columns) == [str(i) for i in range(len(inference.outputs.columns))]
         ):
             inference.outputs.columns = [f"Y{i}" for i in range(len(inference.outputs.columns))]
         

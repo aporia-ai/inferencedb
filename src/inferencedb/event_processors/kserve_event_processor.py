@@ -21,7 +21,7 @@ class KServeEventProcessor(EventProcessor):
                  config: Dict[str, Any]):
         # TODO: Validate config
         self._table = app.Table(
-            name=f"kserve-event-processor-{logger_name}__3",
+            name=f"kserve-event-processor-{logger_name}",
             value_type=bytes
         ).tumbling(10.0, expires=10.0)
         
