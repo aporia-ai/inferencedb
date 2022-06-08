@@ -4,7 +4,7 @@
 
 ---
 
-**InferenceDB** makes it easy to stream inferences of real-time ML models in production to a data lake, based on Kafka. This data is important for retraining purposes, data drift monitoring, performance degradation detection, AI incident investigation and more.
+**InferenceDB** makes it easy to stream inferences of real-time ML models in production to a data lake, based on Kafka. This data can later be used for model retraining, data drift monitoring, performance degradation detection, AI incident investigation and more.
 
 ### Quickstart
 
