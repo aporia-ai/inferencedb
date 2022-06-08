@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="logo.svg" width="300" />
+    <img src="logo.svg" width="400" />
 </p>
 <p align="center"><b>Stream ML model inferences to any data lake</b>, based on <a href="https://kafka.apache.org">Apache Kafka</a>.</p>
 
