@@ -4,9 +4,7 @@
 
 ---
 
-**InferenceDB** makes it easy to store the features and predictions of real-time ML models in production on external data lakes. 
-
-This data can later be used for retraining, data drift monitoring, incident investigation and more.
+**InferenceDB** makes it easy to store the features and predictions of real-time ML models in production on external data lakes. This data can later be used for retraining, data drift monitoring, incident investigation and more.
 
 ### Quickstart
 
@@ -17,7 +15,7 @@ This data can later be used for retraining, data drift monitoring, incident inve
 ### Features
 
 * **Cloud Native** - Runs on top of Kubernetes and supports any cloud infrastructure
-* **Model Serving Integrations** - Connects to existing model serving tools like [KServe](https://kserve.github.io/website/)
+* **Model Serving Integrations** - Connects to ML model serving tools like [KServe](https://kserve.github.io/website/)
 * **Extensible** - Add your own model serving frameworks and database destinations
 * **Horizontally Scalable** - Add more workers to support more models and more traffic 
 * **Python Ecosystem** - Written in Python using [Faust](https://faust.readthedocs.io/en/latest/), so you can add your own data transformations using Numpy, Pandas, etc.
