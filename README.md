@@ -10,6 +10,7 @@ This data is important for retraining purposes, data drift monitoring, performan
 
 ### Quickstart
 
+* [Flask](https://github.com/aporia-ai/inferencedb/wiki/Flask-Quickstart) 
 * [FastAPI](https://github.com/aporia-ai/inferencedb/wiki/FastAPI-Quickstart) 
 * [KServe](https://github.com/aporia-ai/inferencedb/wiki/KServe-Quickstart) 
 
