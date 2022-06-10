@@ -1,0 +1,27 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+build:
+  artifacts:  
+    - image: ghcr.io/aporia-ai/inferencedb
+deploy:
+  helm:
+    releases:
+      - name: inferencedb
+        chartPath: ./charts/inferencedb
+        artifactOverrides:
+          image: ghcr.io/aporia-ai/inferencedb
+        imageStrategy:
+          helm: {}
+        setValues:
+          image:
+            pullPolicy: IfNotPresent
+          devMode: true
+          logLevel: DEBUG
+          kafka:
+            broker: kafka://kafka-cp-kafka:9092
+            schemaRegistryUrl: http://kafka-cp-schema-registry:8081
+            connectUrl: http://kafka-cp-kafka-connect:8083
+          serviceMonitor:
+            enabled: false
+            selector:
+              release: prometheus

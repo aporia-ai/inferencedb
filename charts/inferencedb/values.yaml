@@ -1,0 +1,89 @@
+# Default values for inferencedb.
+
+replicaCount: 3
+image:
+  repository: ghcr.io/aporia-ai/inferencedb
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 6066
+
+rbac:
+  # Specifies whether RBAC resources should be created
+  create: true
+  # If this is false, the service account will be able to read Aporia's resources from any namespace.
+  # NOTE: You also need to change this in the Kubernetes config provider's config!
+  namespaced: false
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+serviceMonitor:
+  ## if ServiceMonitor resources should be deployed for aporia-core
+  enabled: false
+
+  ## labels for ServiceMonitor, so that Prometheus can select it
+  selector: 
+    prometheus: kube-prometheus
+
+  ## the ServiceMonitor web endpoint path
+  path: /metrics
+
+  ## the ServiceMonitor web endpoint interval
+  interval: "30s"
+
+logLevel: INFO
+
+kafka:
+  broker:
+  schemaRegistryUrl:
+  connectUrl:
+  tls:
+    secretName:
+
+configProvider:
+  type: kubernetes
+  args:
+    is_namespaced: false
